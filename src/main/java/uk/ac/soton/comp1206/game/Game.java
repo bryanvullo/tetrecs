@@ -78,12 +78,13 @@ public class Game {
         int x = gameBlock.getX();
         int y = gameBlock.getY();
         
-        if (!grid.canPlayPiece(currentPiece, x, y)) return;
+        logger.info("Block at (" + x + "," + y + ") has been clicked");
         
-        grid.playPiece(currentPiece, x, y);
-        nextPiece();
-        //clear full rows and columns
-        afterPiece();
+        if (!grid.canPlayPiece(currentPiece, x, y)) return; //checks piece can be placed
+        
+        grid.playPiece(currentPiece, x, y); //plays piece
+        afterPiece(); //clear full rows and columns
+        nextPiece(); //sets a new piece to the current piece
     }
     
     /**
@@ -135,6 +136,7 @@ public class Game {
     public void afterPiece() {
         logger.info("checking if any rows or columns are full");
         var blocksToClear = new HashSet<GameBlockCoordinate>();
+        int linesToClear = 0;
         //checking rows
         for (int row = 0; row < rows; row++) {
             var counter = 0;
@@ -145,6 +147,7 @@ public class Game {
                 for (int col = 0; col < cols; col++) {
                     blocksToClear.add(new GameBlockCoordinate(col, row));
                 }
+                linesToClear++;
             }
         }
         //checking columns
@@ -157,11 +160,13 @@ public class Game {
                 for (int row = 0; row < rows; row++) {
                     blocksToClear.add(new GameBlockCoordinate(col, row));
                 }
+                linesToClear++;
             }
         }
         //clear all blocks in the clear list
         for (var block : blocksToClear) {
             grid.set(block.getX(), block.getY(), 0);
         }
+        logger.info("clearing " + linesToClear + " lines");
     }
 }
