@@ -82,16 +82,8 @@ public class Game {
         
         grid.playPiece(currentPiece, x, y);
         nextPiece();
-        
-        //Get the new value for this block
-        int previousValue = grid.get(x,y);
-        int newValue = previousValue + 1;
-        if (newValue  > GamePiece.PIECES) {
-            newValue = 0;
-        }
-        
-        //Update the grid with the new value
-        grid.set(x,y,newValue);
+        //clear full rows and columns
+        afterPiece();
     }
     
     /**
@@ -133,6 +125,7 @@ public class Game {
      */
     public void nextPiece() {
         currentPiece = spawnPiece();
+        logger.info("current piece is" + currentPiece);
     }
     
     /**
