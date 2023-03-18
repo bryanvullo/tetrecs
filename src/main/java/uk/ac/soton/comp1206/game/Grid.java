@@ -124,21 +124,27 @@ public class Grid {
      * @return if the piece can be played
      */
     public Boolean canPlayPiece(GamePiece piece, int x, int y) {
-        logger.info("checking if piece can be played");
+        logger.info("checking if piece can be played piece " + piece + " in"
+            + " coordinates (" + x + "," + y + ")");
         var blocks = piece.getBlocks();
-        int pieceX = 0;
-        for (int i = y - 1; (i < y + 2 & i < rows); i++) {
-            int pieceY = 0;
-            for (int j = x - 1; (j < x + 2 & j < cols); j++) {
-                if (blocks[pieceX][pieceY] > 0 & grid[x][y].get() > 0) {
-                    logger.info("piece cannot be placed");
-                    return false;
+        for (int pieceY = 0; pieceY < 3; pieceY++) {
+            for (int pieceX = 0; pieceX < 3; pieceX++) {
+                if (blocks[pieceX][pieceY] > 0) {
+                    int gridX = x + pieceX - 1; //calculating the grid coordinates
+                    int gridY = y + pieceY - 1;
+                    try {
+                        if (grid[gridX][gridY].get() > 0) {
+                            logger.info("unable to place piece - occupied space");
+                            return false;
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        logger.info("unable to place piece - out of grid");
+                        return false;
+                    }
                 }
-                pieceY++;
             }
-            pieceX++;
         }
-        logger.info("piece can be placed");
+        logger.info("piece can be played");
         return true;
     }
     
@@ -151,20 +157,22 @@ public class Grid {
      */
     public void playPiece(GamePiece piece, int x, int y) {
         var blocks = piece.getBlocks();
-        int pieceX = 0;
+        int pieceY = 0;
+        x--; //offsetting to the top left
+        y--;
+        if (x < 0) x=0;
+        if (y < 0) y=0;
         //iterates over the size of the piece or until the edge of the grid
-        for (int i = y - 1; (i < y + 2 & i < rows); i++) {
-            int pieceY = 0;
-            for (int j = x - 1; (j < x + 2 & j < cols); j++) {
+        for (int i = y; (i < y + 3 & i < rows); i++) {
+            int pieceX = 0;
+            for (int j = x; (j < x + 3 & j < cols); j++) {
                 if (blocks[pieceX][pieceY] > 0) {
-                    grid[x][y].set(blocks[pieceX][pieceY]);
+                    grid[j][i].set(blocks[pieceX][pieceY]);
                 }
-                pieceY++;
+                pieceX++;
             }
-            pieceX++;
+            pieceY++;
         }
         logger.info("played a piece");
     }
-    
-    
 }
