@@ -156,23 +156,17 @@ public class Grid {
      * @param y     the y coordinate of the clicked block
      */
     public void playPiece(GamePiece piece, int x, int y) {
+        logger.info("playing the piece" + piece + "in coordinates "
+            + "(" + x + "," + y + ")");
         var blocks = piece.getBlocks();
-        int pieceY = 0;
-        x--; //offsetting to the top left
-        y--;
-        if (x < 0) x=0;
-        if (y < 0) y=0;
-        //iterates over the size of the piece or until the edge of the grid
-        for (int i = y; (i < y + 3 & i < rows); i++) {
-            int pieceX = 0;
-            for (int j = x; (j < x + 3 & j < cols); j++) {
+        for (int pieceY = 0; pieceY < 3; pieceY++) {
+            for (int pieceX = 0; pieceX < 3; pieceX++) {
                 if (blocks[pieceX][pieceY] > 0) {
-                    grid[j][i].set(blocks[pieceX][pieceY]);
+                    int gridX = x + pieceX - 1; //calculating the grid coordinates
+                    int gridY = y + pieceY - 1;
+                    grid[gridX][gridY].set(blocks[pieceX][pieceY]);
                 }
-                pieceX++;
             }
-            pieceY++;
         }
-        logger.info("played a piece");
     }
 }
