@@ -18,10 +18,10 @@ public class Game {
     private static final Logger logger = LogManager.getLogger(Game.class);
     
     // Bindable properties of the Game class
-    SimpleIntegerProperty score = new SimpleIntegerProperty(0);
-    SimpleIntegerProperty level = new SimpleIntegerProperty(0);
-    SimpleIntegerProperty lives = new SimpleIntegerProperty(3);
-    SimpleIntegerProperty multiplier = new SimpleIntegerProperty(1);
+    public SimpleIntegerProperty score = new SimpleIntegerProperty(0);
+    public SimpleIntegerProperty level = new SimpleIntegerProperty(0);
+    public SimpleIntegerProperty lives = new SimpleIntegerProperty(3);
+    public SimpleIntegerProperty multiplier = new SimpleIntegerProperty(1);
     
     /**
      * Number of rows
