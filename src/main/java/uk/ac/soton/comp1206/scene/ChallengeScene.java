@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
@@ -56,7 +58,7 @@ public class ChallengeScene extends BaseScene {
         var topBar = new HBox();
         topBar.alignmentProperty().set(Pos.CENTER);
         
-        var challengeText = new Text("Challenge Mode");
+        var challengeText = new Text("Challenge Mode"); //TODO to change dynamically later
         challengeText.getStyleClass().add("title");
         
         var scoreBox = new VBox();
@@ -78,7 +80,7 @@ public class ChallengeScene extends BaseScene {
         livesBox.getChildren().addAll(livesText, lives);
         
         topBar.getChildren().addAll(scoreBox, challengeText, livesBox);
-        topBar.setSpacing(150);
+        topBar.setSpacing(150); //TODO find out how to do this properly
         
         mainPane.setTop(topBar);
     
@@ -87,12 +89,23 @@ public class ChallengeScene extends BaseScene {
         sideBar.alignmentProperty().set(Pos.CENTER);
         
         var levelText = new Text("Level");
-        levelText.getStyleClass().add("heading");
+        levelText.getStyleClass().add("heading"); //adds styling from css file
         var level = new Text();
-        level.textProperty().bind(game.lives.asString());
+        level.textProperty().bind(game.lives.asString()); //binds UI comp to game property
         level.getStyleClass().add("level");
+    
+        var multiText = new Text("Multiplier"); //TODO find out where to put this
+        multiText.getStyleClass().add("heading");
+        var multiFlow = new TextFlow();
+        multiFlow.textAlignmentProperty().set(TextAlignment.CENTER);
+        var multi = new Text();
+        multi.textProperty().bind(game.multiplier.asString());
+        multi.getStyleClass().add("multiplier");
+        var multiSymbol = new Text(" X");
+        multiSymbol.getStyleClass().add("multiplier");
+        multiFlow.getChildren().addAll(multi, multiSymbol);
         
-        sideBar.getChildren().addAll(levelText, level);
+        sideBar.getChildren().addAll(levelText, level, multiText, multiFlow);
         
         mainPane.setRight(sideBar);
 
