@@ -177,8 +177,15 @@ public class Game {
         }
         logger.info("clearing " + linesToClear + " lines");
         
-        //increase score
-        score(linesToClear, blocksToClear.size());
+        if (linesToClear > 0) {
+            score(linesToClear, blocksToClear.size()); //increase score
+            multiplier.set(multiplier.get() + 1); //increase multiplier
+        } else {
+            multiplier.set(1);
+        }
+        
+        //updating level
+        level.set(score.get() / 1000);
     }
     
     /**
@@ -187,6 +194,6 @@ public class Game {
      * @param blocks number of blocks cleared
      */
     private void score(int lines, int blocks) {
-        score.set(score.getValue() + (lines * blocks * 10 * multiplier.getValue()));
+        score.set(score.get() + (lines * blocks * 10 * multiplier.get()));
     }
 }
