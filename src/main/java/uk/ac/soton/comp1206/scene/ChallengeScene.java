@@ -1,5 +1,7 @@
 package uk.ac.soton.comp1206.scene;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
@@ -52,10 +54,13 @@ public class ChallengeScene extends BaseScene {
         
         //adding UI components: score, lives
         var topBar = new HBox();
+        topBar.alignmentProperty().set(Pos.CENTER);
+        
         var challengeText = new Text("Challenge Mode");
         challengeText.getStyleClass().add("title");
         
         var scoreBox = new VBox();
+        scoreBox.alignmentProperty().set(Pos.CENTER);
         var scoreText = new Text("Score");
         scoreText.getStyleClass().add("heading");
         var score = new Text();
@@ -64,6 +69,7 @@ public class ChallengeScene extends BaseScene {
         scoreBox.getChildren().addAll(scoreText, score);
         
         var livesBox = new VBox();
+        livesBox.alignmentProperty().set(Pos.CENTER);
         var livesText = new Text("Lives");
         livesText.getStyleClass().add("heading");
         var lives = new Text();
@@ -72,11 +78,13 @@ public class ChallengeScene extends BaseScene {
         livesBox.getChildren().addAll(livesText, lives);
         
         topBar.getChildren().addAll(scoreBox, challengeText, livesBox);
+        topBar.setSpacing(150);
         
         mainPane.setTop(topBar);
     
         //adding UI components: level, multiplier
         var sideBar = new VBox();
+        sideBar.alignmentProperty().set(Pos.CENTER);
         
         var levelText = new Text("Level");
         levelText.getStyleClass().add("heading");
