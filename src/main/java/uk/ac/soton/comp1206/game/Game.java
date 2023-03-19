@@ -176,5 +176,17 @@ public class Game {
             grid.set(block.getX(), block.getY(), 0);
         }
         logger.info("clearing " + linesToClear + " lines");
+        
+        //increase score
+        score(linesToClear, blocksToClear.size());
+    }
+    
+    /**
+     * this method updates the score
+     * @param lines number of lines cleared
+     * @param blocks number of blocks cleared
+     */
+    private void score(int lines, int blocks) {
+        score.set(score.getValue() + (lines * blocks * 10 * multiplier.getValue()));
     }
 }
