@@ -1,6 +1,7 @@
 package uk.ac.soton.comp1206.scene;
 
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
@@ -48,6 +49,44 @@ public class ChallengeScene extends BaseScene {
 
         var board = new GameBoard(game.getGrid(),gameWindow.getWidth()/2,gameWindow.getWidth()/2);
         mainPane.setCenter(board);
+        
+        //adding UI components: score, lives
+        var topBar = new HBox();
+        var challengeText = new Text("Challenge Mode");
+        challengeText.getStyleClass().add("title");
+        
+        var scoreBox = new VBox();
+        var scoreText = new Text("Score");
+        scoreText.getStyleClass().add("heading");
+        var score = new Text();
+        score.textProperty().bind(game.score.asString());
+        score.getStyleClass().add("score");
+        scoreBox.getChildren().addAll(scoreText, score);
+        
+        var livesBox = new VBox();
+        var livesText = new Text("Lives");
+        livesText.getStyleClass().add("heading");
+        var lives = new Text();
+        lives.textProperty().bind(game.lives.asString());
+        lives.getStyleClass().add("lives");
+        livesBox.getChildren().addAll(livesText, lives);
+        
+        topBar.getChildren().addAll(scoreBox, challengeText, livesBox);
+        
+        mainPane.setTop(topBar);
+    
+        //adding UI components: level, multiplier
+        var sideBar = new VBox();
+        
+        var levelText = new Text("Level");
+        levelText.getStyleClass().add("heading");
+        var level = new Text();
+        level.textProperty().bind(game.lives.asString());
+        level.getStyleClass().add("level");
+        
+        sideBar.getChildren().addAll(levelText, level);
+        
+        mainPane.setRight(sideBar);
 
         //Handle block on gameboard grid being clicked
         board.setOnBlockClick(this::blockClicked);
