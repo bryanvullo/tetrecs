@@ -91,7 +91,7 @@ public class ChallengeScene extends BaseScene {
         var levelText = new Text("Level");
         levelText.getStyleClass().add("heading"); //adds styling from css file
         var level = new Text();
-        level.textProperty().bind(game.lives.asString()); //binds UI comp to game property
+        level.textProperty().bind(game.level.asString()); //binds UI comp to game property
         level.getStyleClass().add("level");
     
         var multiText = new Text("Multiplier"); //TODO find out where to put this
