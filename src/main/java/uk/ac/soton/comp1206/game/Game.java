@@ -2,6 +2,8 @@ package uk.ac.soton.comp1206.game;
 
 import java.util.HashSet;
 import java.util.Random;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
@@ -14,6 +16,12 @@ import uk.ac.soton.comp1206.component.GameBlockCoordinate;
 public class Game {
     
     private static final Logger logger = LogManager.getLogger(Game.class);
+    
+    // Bindable properties of the Game class
+    SimpleIntegerProperty score = new SimpleIntegerProperty(0);
+    SimpleIntegerProperty level = new SimpleIntegerProperty(0);
+    SimpleIntegerProperty lives = new SimpleIntegerProperty(3);
+    SimpleIntegerProperty multiplier = new SimpleIntegerProperty(1);
     
     /**
      * Number of rows
