@@ -54,8 +54,9 @@ public class ChallengeScene extends BaseScene {
         var board = new GameBoard(game.getGrid(),gameWindow.getWidth()/2,gameWindow.getWidth()/2);
         mainPane.setCenter(board);
         
-        //adding UI components: score, lives
+        //adding UI components: score, lives, level and multiplier
         var topBar = new GameBar("Challenge Mode");
+        //binding the UI properties to the model
         topBar.scoreProperty().bind(game.score.asString());
         topBar.livesProperty().bind(game.lives.asString());
         topBar.levelProperty().bind(game.level.asString());
@@ -63,7 +64,7 @@ public class ChallengeScene extends BaseScene {
         
         mainPane.setTop(topBar);
     
-        //adding UI components: level, multiplier
+        //adding sidebar UI components
         var sideBar = new VBox();
         sideBar.alignmentProperty().set(Pos.CENTER);
         
