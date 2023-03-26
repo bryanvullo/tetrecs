@@ -1,6 +1,5 @@
 package uk.ac.soton.comp1206.scene;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -8,6 +7,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uk.ac.soton.comp1206.component.GameBar;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBoard;
 import uk.ac.soton.comp1206.game.Game;
@@ -58,32 +58,11 @@ public class ChallengeScene extends BaseScene {
         mainPane.setCenter(board);
         
         //adding UI components: score, lives
-        var topBar = new HBox();
-        topBar.alignmentProperty().set(Pos.CENTER);
-        
-        var challengeText = new Text("Challenge Mode"); //TODO to change dynamically later
-        challengeText.getStyleClass().add("title");
-        
-        var scoreBox = new VBox();
-        scoreBox.alignmentProperty().set(Pos.CENTER);
-        var scoreText = new Text("Score");
-        scoreText.getStyleClass().add("heading");
-        var score = new Text();
-        score.textProperty().bind(game.score.asString());
-        score.getStyleClass().add("score");
-        scoreBox.getChildren().addAll(scoreText, score);
-        
-        var livesBox = new VBox();
-        livesBox.alignmentProperty().set(Pos.CENTER);
-        var livesText = new Text("Lives");
-        livesText.getStyleClass().add("heading");
-        var lives = new Text();
-        lives.textProperty().bind(game.lives.asString());
-        lives.getStyleClass().add("lives");
-        livesBox.getChildren().addAll(livesText, lives);
-        
-        topBar.getChildren().addAll(scoreBox, challengeText, livesBox);
-        topBar.setSpacing(150);
+        var topBar = new GameBar("Challenge Mode");
+        topBar.scoreProperty().bind(game.score.asString());
+        topBar.livesProperty().bind(game.lives.asString());
+        topBar.levelProperty().bind(game.level.asString());
+        topBar.multiplierProperty().bind(game.multiplier.asString());
         
         mainPane.setTop(topBar);
     
@@ -91,28 +70,9 @@ public class ChallengeScene extends BaseScene {
         var sideBar = new VBox();
         sideBar.alignmentProperty().set(Pos.CENTER);
         
-        var levelText = new Text("Level");
-        levelText.getStyleClass().add("heading"); //adds styling from css file
-        var level = new Text();
-        level.textProperty().bind(game.level.asString()); //binds UI comp to game property
-        level.getStyleClass().add("level");
-    
-        var multiText = new Text("Multiplier");
-        multiText.getStyleClass().add("heading");
-        var multiFlow = new TextFlow();
-        multiFlow.textAlignmentProperty().set(TextAlignment.CENTER);
-        var multi = new Text();
-        multi.textProperty().bind(game.multiplier.asString());
-        multi.getStyleClass().add("multiplier");
-        var multiSymbol = new Text(" X");
-        multiSymbol.getStyleClass().add("multiplier");
-        multiFlow.getChildren().addAll(multi, multiSymbol);
-        
-        sideBar.getChildren().addAll(levelText, level, multiText, multiFlow);
-        
         mainPane.setRight(sideBar);
 
-        //Handle block on gameboard grid being clicked
+        //Handle block on game board grid being clicked
         board.setOnBlockClick(this::blockClicked);
     }
 
@@ -125,7 +85,7 @@ public class ChallengeScene extends BaseScene {
     }
 
     /**
-     * Setup the game object and model
+     * Set up the game object and model
      */
     public void setupGame() {
         logger.info("Starting a new challenge");

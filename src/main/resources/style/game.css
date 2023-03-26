@@ -80,9 +80,9 @@
 }
 
 .level {
-    -fx-fill: #ff6600;
+    -fx-fill: magenta;
     -fx-font-family: 'Orbitron';
-    -fx-font-size: 24px;
+    -fx-font-size: 36px;
     -fx-font-weight: 700;
     -fx-border-color: black;
     -fx-stroke: black;
@@ -102,7 +102,7 @@
 }
 
 .lives {
-    -fx-fill: yellow;
+    -fx-fill: red;
     -fx-font-family: 'Orbitron';
     -fx-font-size: 36px;
     -fx-font-weight: 700;
@@ -113,9 +113,9 @@
 }
 
 .multiplier {
-    -fx-fill: blue;
+    -fx-fill: #ff6600;
     -fx-font-family: 'Orbitron';
-    -fx-font-size: 24px;
+    -fx-font-size: 36px;
     -fx-font-weight: 700;
     -fx-border-color: black;
     -fx-stroke: black;
