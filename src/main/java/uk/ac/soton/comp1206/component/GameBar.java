@@ -77,7 +77,7 @@ public class GameBar extends VBox {
         multiFlow.getChildren().addAll(multiplier, multiSymbol);
         multiBox.getChildren().addAll(multiText, multiFlow);
     
-        //current game info
+        //current game info bar
         var gameDataBar = new HBox();
         gameDataBar.getChildren().addAll(levelBox, scoreBox, multiBox, livesBox);
         gameDataBar.alignmentProperty().set(Pos.CENTER);
