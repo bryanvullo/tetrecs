@@ -43,6 +43,9 @@ public class Multimedia {
         //checks if audio is enabled
         if (!audioEnabled) return;
         
+        //stops previous music
+        musicPlayer.stop();
+        
         //gets the external form of the music file
         String toPlay = getMediaFile(musicFile);
     
