@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBoard;
 import uk.ac.soton.comp1206.game.Game;
+import uk.ac.soton.comp1206.media.Multimedia;
 import uk.ac.soton.comp1206.ui.GamePane;
 import uk.ac.soton.comp1206.ui.GameWindow;
 
@@ -36,6 +37,8 @@ public class ChallengeScene extends BaseScene {
      */
     @Override
     public void build() {
+        Multimedia.playMusic("music/game.wav"); //background music
+        
         logger.info("Building " + this.getClass().getName());
 
         setupGame();
@@ -80,7 +83,7 @@ public class ChallengeScene extends BaseScene {
         livesBox.getChildren().addAll(livesText, lives);
         
         topBar.getChildren().addAll(scoreBox, challengeText, livesBox);
-        topBar.setSpacing(150); //TODO find out how to do this properly
+        topBar.setSpacing(150);
         
         mainPane.setTop(topBar);
     
@@ -94,7 +97,7 @@ public class ChallengeScene extends BaseScene {
         level.textProperty().bind(game.level.asString()); //binds UI comp to game property
         level.getStyleClass().add("level");
     
-        var multiText = new Text("Multiplier"); //TODO find out where to put this
+        var multiText = new Text("Multiplier");
         multiText.getStyleClass().add("heading");
         var multiFlow = new TextFlow();
         multiFlow.textAlignmentProperty().set(TextAlignment.CENTER);

@@ -22,9 +22,17 @@ public class Multimedia {
      */
     public static void playAudio(String audioFile) {
         if (!audioEnabled) return; //check if audio has been disabled
+        
         String toPlay = getMediaFile(audioFile); //get audio file
     
-        tryPlayMedia(audioPlayer, toPlay);
+        try {
+            Media play = new Media(toPlay);
+            audioPlayer = new MediaPlayer(play);
+            audioPlayer.play();
+        } catch (Exception e) {
+            audioEnabled = false;
+            logger.error("unable to play audio, disabling audio");
+        }
     }
     
     /**
@@ -32,10 +40,23 @@ public class Multimedia {
      * @param musicFile The music file to play
      */
     public static void playMusic(String musicFile) {
+        //checks if audio is enabled
         if (!audioEnabled) return;
+        
+        //gets the external form of the music file
         String toPlay = getMediaFile(musicFile);
     
-        tryPlayMedia(musicPlayer, toPlay);
+        try {
+            Media play = new Media(toPlay);
+            musicPlayer = new MediaPlayer(play);
+            musicPlayer.play();
+        } catch (Exception e) {
+            audioEnabled = false;
+            logger.error("unable to play audio, disabling audio");
+        }
+        
+        //auto loop the background music
+        musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     }
     
     /**
@@ -52,13 +73,14 @@ public class Multimedia {
     /**
      * This method tries to play a Media file.
      * If this method runs into an exception then audio is disabled for the application.
-     * @param player The player which you want the Media file to play on
-     * @param file The Media file which you want to play on the player
+     * @param playerName The name of the class variable which stores the media player you want to play on.
+     * @param file The String representation of the Media file which you want to play on the player
      */
-    private static void tryPlayMedia(MediaPlayer player, String file) {
+    private static void tryPlayMedia(String playerName, String file) {
         try {
-            Media play = new Media(file);
-            player = new MediaPlayer(play); //TODO check if the reassignment is a problem for field variable
+            Media toPlay = new Media(file);
+            var player = (MediaPlayer) Multimedia.class.getField(playerName).get(null);
+            player = new MediaPlayer(toPlay);
             player.play();
         } catch (Exception e) {
             audioEnabled = false;
