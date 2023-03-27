@@ -34,7 +34,8 @@ public class ChallengeScene extends BaseScene {
      */
     @Override
     public void build() {
-        Multimedia.playMusic("music/game.wav"); //background music
+        Multimedia.playMusic("music/game_start.wav"); //background music: play once
+        Multimedia.setOnMusicEnd("music/game.wav"); //background music: loop this track for game
         
         logger.info("Building " + this.getClass().getName());
 

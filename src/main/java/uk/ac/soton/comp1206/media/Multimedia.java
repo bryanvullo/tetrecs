@@ -44,7 +44,7 @@ public class Multimedia {
         if (!audioEnabled) return;
         
         //stops previous music
-        musicPlayer.stop();
+        if (musicPlayer != null) musicPlayer.stop();
         
         //gets the external form of the music file
         String toPlay = getMediaFile(musicFile);
@@ -89,5 +89,9 @@ public class Multimedia {
             audioEnabled = false;
             logger.error("unable to play audio, disabling audio");
         }
+    }
+    
+    public static void setOnMusicEnd(String otherMusicFile) {
+        musicPlayer.setOnEndOfMedia(() -> playMusic(otherMusicFile));
     }
 }
