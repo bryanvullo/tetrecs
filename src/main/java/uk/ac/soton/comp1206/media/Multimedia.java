@@ -69,7 +69,7 @@ public class Multimedia {
      */
     private static String getMediaFile(String file) {
         String toPlay = Multimedia.class.getResource("/" + file).toExternalForm();
-        logger.info("Playing audio: " + toPlay);
+        logger.info("Playing audio: {}", toPlay);
         return toPlay;
     }
     
@@ -92,6 +92,7 @@ public class Multimedia {
     }
     
     public static void setOnMusicEnd(String otherMusicFile) {
+        logger.info("setting {} to play next", otherMusicFile);
         musicPlayer.setOnEndOfMedia(() -> playMusic(otherMusicFile));
     }
 }
