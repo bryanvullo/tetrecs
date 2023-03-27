@@ -56,7 +56,7 @@ public class GameWindow {
 
         //Setup communicator
         communicator = new Communicator("ws://ofb-labs.soton.ac.uk:9700");
-
+        
         //Go to menu
         startMenu();
     }
@@ -114,7 +114,7 @@ public class GameWindow {
     }
 
     /**
-     * Setup the default scene (an empty black scene) when no scene is loaded
+     * Set up the default scene (an empty black scene) when no scene is loaded
      */
     public void setupDefaultScene() {
         this.scene = new Scene(new Pane(),width,height, Color.BLACK);
