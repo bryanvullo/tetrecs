@@ -1,6 +1,8 @@
 package uk.ac.soton.comp1206.scene;
 
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,6 +26,7 @@ public class MenuScene extends BaseScene {
     private static final Logger logger = LogManager.getLogger(MenuScene.class);
     private ImageView logo;
     private StackPane menuPane;
+    private ImageView title;
     
     /**
      * Create a new menu scene
@@ -53,10 +56,11 @@ public class MenuScene extends BaseScene {
 
         //Beautiful title
         var titleUri = getClass().getResource("/images/TetrECS.png").toExternalForm();
-        var title = new ImageView(titleUri);
+        title = new ImageView(titleUri);
         title.setFitWidth(gameWindow.getWidth()/1.3);
         title.setPreserveRatio(true);
         mainPane.setCenter(title);
+        animateTitle();
     
             //Menu Options
         var menuOptions = new VBox();
@@ -162,6 +166,18 @@ public class MenuScene extends BaseScene {
     private void quit(MouseEvent event) {
         logger.info("Closing the Application");
         App.getInstance().shutdown();
+    }
+    
+    /**
+     * This method animates the title to rotate indefinitely
+     */
+    private void animateTitle() {
+        title.setRotate(-15);
+        var animation = new RotateTransition(Duration.seconds(5), title);
+        animation.setByAngle(30);
+        animation.setCycleCount(Animation.INDEFINITE);
+        animation.setAutoReverse(true);
+        animation.play();
     }
 
 }
