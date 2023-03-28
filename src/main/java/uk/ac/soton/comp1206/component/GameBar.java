@@ -7,11 +7,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import uk.ac.soton.comp1206.scene.MenuScene;
 
 /**
  * This class is a custom component which creates the top bar of the game windows
  */
 public class GameBar extends VBox {
+    private static final Logger logger = LogManager.getLogger(GameBar.class);
     
     String title;
     private Text score;
@@ -24,11 +28,13 @@ public class GameBar extends VBox {
      * @param title the title at the top of the GameBar
      */
     public GameBar(String title) {
+        logger.info("Building the Game Bar");
         this.title = title; //title is changed: single/multi-player
         build();
     }
     
     private void build() {
+        logger.info("Building The Game Bar");
         alignmentProperty().set(Pos.CENTER);
         
         //title of GameBar
@@ -91,6 +97,7 @@ public class GameBar extends VBox {
      * @return the score StringProperty
      */
     public StringProperty scoreProperty() {
+        logger.info("exposing the Score Property");
         return score.textProperty();
     }
     
@@ -99,6 +106,7 @@ public class GameBar extends VBox {
      * @return the multiplier StringProperty
      */
     public StringProperty multiplierProperty() {
+        logger.info("exposing the Multiplier Property");
         return multiplier.textProperty();
     }
     
@@ -107,6 +115,7 @@ public class GameBar extends VBox {
      * @return the level StringProperty
      */
     public StringProperty levelProperty() {
+        logger.info("exposing the Level Property");
         return level.textProperty();
     }
     
@@ -115,6 +124,7 @@ public class GameBar extends VBox {
      * @return the lives StringProperty
      */
     public StringProperty livesProperty() {
+        logger.info("exposing the Lives Property");
         return lives.textProperty();
     }
 }
