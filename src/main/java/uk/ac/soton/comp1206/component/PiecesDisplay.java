@@ -3,6 +3,8 @@ package uk.ac.soton.comp1206.component;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.game.GamePiece;
 import uk.ac.soton.comp1206.game.Grid;
 import uk.ac.soton.comp1206.ui.GameWindow;
@@ -12,12 +14,16 @@ import uk.ac.soton.comp1206.ui.GameWindow;
  */
 public class PiecesDisplay extends VBox {
     
+    private static final Logger logger = LogManager.getLogger(PiecesDisplay.class);
+    
     /**
      * Creates a custom component which creates a UI display of every piece in the game
      */
     public PiecesDisplay(GameWindow window) {
-    
-        var size = window.getWidth()/10;
+        logger.info("Creating the Pieces Display");
+        var size = window.getWidth()/12;
+        setSpacing(10);
+        
             //three rows of 5 game pieces
         //first row
         var row1 = new HBox();
