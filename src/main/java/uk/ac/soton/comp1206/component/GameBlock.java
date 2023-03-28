@@ -122,7 +122,8 @@ public class GameBlock extends Canvas {
         gc.clearRect(0,0,width,height);
 
         //Fill
-        gc.setFill(Color.WHITE);
+        Color translucentBlack = Color.color(1,1,1, 0.1);
+        gc.setFill(translucentBlack);
         gc.fillRect(0,0, width, height);
 
         //Border
