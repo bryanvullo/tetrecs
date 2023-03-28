@@ -2,12 +2,15 @@ package uk.ac.soton.comp1206.scene;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBar;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBoard;
+import uk.ac.soton.comp1206.component.PieceBoard;
 import uk.ac.soton.comp1206.game.Game;
+import uk.ac.soton.comp1206.game.Grid;
 import uk.ac.soton.comp1206.media.Multimedia;
 import uk.ac.soton.comp1206.ui.GamePane;
 import uk.ac.soton.comp1206.ui.GameWindow;
@@ -71,8 +74,20 @@ public class ChallengeScene extends BaseScene {
         //adding sidebar UI components
         var sideBar = new VBox();
         sideBar.alignmentProperty().set(Pos.CENTER);
-        
         mainPane.setRight(sideBar);
+        
+        //current piece board
+        var currentPieceText = new Text("Current Piece");
+        currentPieceText.getStyleClass().add("heading");
+        var currentPiece = new PieceBoard(new Grid(3,3),
+            gameWindow.getWidth()/4, gameWindow.getWidth()/4);
+        sideBar.getChildren().addAll(currentPieceText, currentPiece);
+        //next piece board
+        var nextPieceText = new Text("Next Piece");
+        nextPieceText.getStyleClass().add("heading");
+        var nextPiece = new PieceBoard(new Grid(3,3),
+            gameWindow.getWidth()/8, gameWindow.getWidth()/8);
+        sideBar.getChildren().addAll(nextPieceText, nextPiece);
 
         //Handle block on game board grid being clicked
         board.setOnBlockClick(this::blockClicked);
