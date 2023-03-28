@@ -1,9 +1,12 @@
 package uk.ac.soton.comp1206.component;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.game.GamePiece;
 import uk.ac.soton.comp1206.game.Grid;
 
 public class PieceBoard extends GameBoard {
+    private static final Logger logger = LogManager.getLogger(PieceBoard.class);
     
     /**
      * Create a new GameBoard with its own internal grid, specifying the number of columns and rows,
@@ -16,6 +19,7 @@ public class PieceBoard extends GameBoard {
      */
     public PieceBoard(int cols, int rows, double width, double height) {
         super(cols, rows, width, height);
+        logger.info("Creating a Piece Board");
     }
     
     /**
@@ -27,6 +31,7 @@ public class PieceBoard extends GameBoard {
      */
     public PieceBoard(Grid grid, double width, double height) {
         super(grid, width, height);
+        logger.info("Creating a Piece Board");
     }
     
     /**
@@ -34,6 +39,7 @@ public class PieceBoard extends GameBoard {
      * @param piece The GamePiece to display
      */
     public void setPieceToDisplay(GamePiece piece) {
+        logger.info("Setting Piece {} in PieceBoard", piece);
         var pieceBlocks = piece.getBlocks();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
