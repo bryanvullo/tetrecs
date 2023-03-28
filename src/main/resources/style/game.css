@@ -11,11 +11,6 @@
     -fx-background-size: cover;
 }
 
-.menu-black-fill {
-    -fx-background-color: black;
-    -fx-background-size: cover;
-}
-
 .challenge-background {
     -fx-background-image: url("../images/2.jpg");
     -fx-background-size: cover;
