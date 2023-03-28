@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uk.ac.soton.comp1206.component.PiecesDisplay;
 import uk.ac.soton.comp1206.ui.GamePane;
 import uk.ac.soton.comp1206.ui.GameWindow;
 
@@ -49,27 +50,38 @@ public class InstructionScene extends BaseScene {
         var mainPane = new BorderPane();
         backPane.getChildren().add(mainPane);
         
+        //top bar with title and text
         var top = new VBox();
         top.alignmentProperty().set(Pos.CENTER);
         top.setPadding(new Insets(10, 30, 20, 30));
-        
+        mainPane.setTop(top);
+    
         var title = new Text("Instructions");
-        title.getStyleClass().add("title");
-        
+        title.getStyleClass().add("heading");
+    
         var text = new Text("TetrECS is a fast-paced gravity-free block placement game. You must "
             + "survive by clearing lines through thoughtful placement of each block. Watch the timer!"
             + " Each time the timer runs out you lose a life");
-        text.getStyleClass().add("heading");
+        text.getStyleClass().add("text");
         var flow = new TextFlow(text);
-        
         top.getChildren().addAll(title, flow);
-        mainPane.setTop(top);
+        
+        //instructions image
+        var centre = new VBox();
+        centre.alignmentProperty().set(Pos.CENTER);
+        mainPane.setCenter(centre);
         
         var instructionUri = getClass().getResource("/images/Instructions.png").toExternalForm();
         var instructionsImage = new ImageView(instructionUri);
         instructionsImage.setPreserveRatio(true);
-        instructionsImage.setFitWidth(gameWindow.getWidth()/1.3);
-        mainPane.setCenter(instructionsImage);
+        instructionsImage.setFitWidth(gameWindow.getWidth()/2);
+        centre.getChildren().add(instructionsImage);
+        
+        //pieces display
+        var piecesText = new Text("Game Pieces");
+        piecesText.getStyleClass().add("heading");
+        var pieces = new PiecesDisplay(gameWindow);
+        centre.getChildren().addAll(piecesText, pieces);
     }
     
     /**
