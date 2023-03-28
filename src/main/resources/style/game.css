@@ -68,6 +68,15 @@
     -fx-effect: dropshadow(gaussian, black, 1, 1.0, 1, 1);
 }
 
+.text {
+    -fx-fill: white;
+    -fx-font-family: 'Orbitron';
+    -fx-font-size: 12px;
+    -fx-font-weight: 900;
+    -fx-border-color: black;
+    -fx-effect: dropshadow(gaussian, black, 1, 1.0, 1, 1);
+}
+
 .score {
     -fx-fill: yellow;
     -fx-font-family: 'Orbitron';
