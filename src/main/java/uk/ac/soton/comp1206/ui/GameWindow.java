@@ -79,6 +79,13 @@ public class GameWindow {
     public void startMenu() {
         loadScene(new MenuScene(this));
     }
+    
+    /**
+     * Display the instructions screen
+     */
+    public void startInstructions() {
+        loadScene(new InstructionScene(this));
+    }
 
     /**
      * Display the single player challenge

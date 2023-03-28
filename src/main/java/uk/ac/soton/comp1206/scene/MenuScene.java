@@ -2,13 +2,16 @@ package uk.ac.soton.comp1206.scene;
 
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uk.ac.soton.comp1206.App;
 import uk.ac.soton.comp1206.media.Multimedia;
 import uk.ac.soton.comp1206.ui.GamePane;
 import uk.ac.soton.comp1206.ui.GameWindow;
@@ -48,17 +51,45 @@ public class MenuScene extends BaseScene {
         var mainPane = new BorderPane();
         menuPane.getChildren().add(mainPane);
 
-        //Awful title
-        var title = new Text("TetrECS");
-        title.getStyleClass().add("title");
-        mainPane.setTop(title);
-
-        //For now, let us just add a button that starts the game. I'm sure you'll do something way better.
-        var button = new Button("Play");
-        mainPane.setCenter(button);
-
-        //Bind the button action to the startGame method in the menu
-        button.setOnAction(this::startGame);
+        //Beautiful title
+        var titleUri = getClass().getResource("/images/TetrECS.png").toExternalForm();
+        var title = new ImageView(titleUri);
+        title.setFitWidth(gameWindow.getWidth()/1.3);
+        title.setPreserveRatio(true);
+        mainPane.setCenter(title);
+    
+            //Menu Options
+        var menuOptions = new VBox();
+        mainPane.setBottom(menuOptions);
+        menuOptions.alignmentProperty().set(Pos.TOP_CENTER);
+        
+        //single-player
+        var singlePlayer = new Text("Single Player");
+        singlePlayer.getStyleClass().add("menuItem");
+        menuOptions.getChildren().add(singlePlayer);
+        //Bind the text 'Single Player' clicked action to startGame method in the menu
+        singlePlayer.setOnMouseClicked(this::startGame);
+        
+        //multi-player
+        var multiPlayer = new Text("Multi Player");
+        multiPlayer.getStyleClass().add("menuItem");
+        menuOptions.getChildren().add(multiPlayer);
+        //Bind the text 'Multi Player' clicked action to startGame method in the menu TODO change this
+//        multiPlayer.setOnMouseClicked(this::startGame);
+        
+        //instructions screen
+        var instructions = new Text("How To Play");
+        instructions.getStyleClass().add("menuItem");
+        menuOptions.getChildren().add(instructions);
+        //Bind the text 'How To Play' clicked action to openInstructions method in the menu
+        instructions.setOnMouseClicked(this::openInstructions);
+        
+        //exit game
+        var exit = new Text("Exit");
+        exit.getStyleClass().add("menuItem");
+        menuOptions.getChildren().add(exit);
+        //Bind the text 'Exit' clicked action to quit method in the menu
+        exit.setOnMouseClicked(this::quit);
     }
 
     /**
@@ -80,7 +111,7 @@ public class MenuScene extends BaseScene {
         var pane = new StackPane();
         pane.setMaxWidth(gameWindow.getWidth());
         pane.setMaxHeight(gameWindow.getHeight());
-        pane.getStyleClass().add("menu-black-fill");
+        pane.getStyleClass().add("intro");
         
         root.getChildren().add(pane);
         pane.getChildren().add(logo);
@@ -106,11 +137,29 @@ public class MenuScene extends BaseScene {
     }
 
     /**
-     * Handle when the Start Game button is pressed
+     * Handle when the Single Player Text is pressed
      * @param event event
      */
-    private void startGame(ActionEvent event) {
+    private void startGame(MouseEvent event) {
         gameWindow.startChallenge();
+    }
+    
+    /**
+     * Handle when the 'How To Play' Text is pressed
+     * @param event event
+     */
+    private void openInstructions(MouseEvent event) {
+        gameWindow.startInstructions();
+    }
+    
+    /**
+     * Handle when the user presses 'Exit'
+     * Closes the Application
+     * @param event event
+     */
+    private void quit(MouseEvent event) {
+        logger.info("Closing the Application");
+        App.getInstance().shutdown();
     }
 
 }
