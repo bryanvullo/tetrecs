@@ -11,9 +11,19 @@ import org.apache.logging.log4j.Logger;
 public class Multimedia {
     
     private static final Logger logger = LogManager.getLogger(Multimedia.class);
+    
+    /**
+     * boolean value used to check if audio has been disabled
+     */
     private static boolean audioEnabled = true;
     
+    /**
+     * MediaPlayer used to play audio/SFX
+     */
     private static MediaPlayer audioPlayer;
+    /**
+     * MediaPlayer used to play background music
+     */
     private static MediaPlayer musicPlayer;
     
     /**

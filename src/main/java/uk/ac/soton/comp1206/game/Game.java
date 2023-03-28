@@ -17,10 +17,21 @@ public class Game {
     
     private static final Logger logger = LogManager.getLogger(Game.class);
     
-    // Bindable properties of the Game class
+    /**
+     * Bindable score integer property of the Game class
+     */
     public SimpleIntegerProperty score = new SimpleIntegerProperty(0);
+    /**
+     * Bindable level integer property of the Game class
+     */
     public SimpleIntegerProperty level = new SimpleIntegerProperty(0);
+    /**
+     * Bindable lives integer property of the Game class
+     */
     public SimpleIntegerProperty lives = new SimpleIntegerProperty(3);
+    /**
+     * Bindable multiplier integer property of the Game class
+     */
     public SimpleIntegerProperty multiplier = new SimpleIntegerProperty(1);
     
     /**
@@ -124,9 +135,10 @@ public class Game {
      * @return random GamePiece
      */
     public GamePiece spawnPiece() {
-        logger.info("generating a new piece");
-        var piece = random.nextInt(15);
-        return GamePiece.createPiece(piece);
+        var piece = random.nextInt(GamePiece.PIECES);
+        var gamePiece = GamePiece.createPiece(piece);
+        logger.info("generating a new piece: {}", gamePiece);
+        return gamePiece;
     }
     
     /**
@@ -134,7 +146,6 @@ public class Game {
      */
     public void nextPiece() {
         currentPiece = spawnPiece();
-        logger.info("current piece is" + currentPiece);
     }
     
     /**
@@ -175,7 +186,7 @@ public class Game {
         for (var block : blocksToClear) {
             grid.set(block.getX(), block.getY(), 0);
         }
-        logger.info("clearing " + linesToClear + " lines");
+        logger.info("clearing {} lines", linesToClear);
         
         if (linesToClear > 0) {
             score(linesToClear, blocksToClear.size()); //increase score

@@ -67,6 +67,7 @@ public class MenuScene extends BaseScene {
      */
     @Override
     public void initialise() {
+        logger.info("initialising the menu scene");
         Multimedia.playMusic("music/menu.mp3"); //background music
         
         //gets the logo image
@@ -93,6 +94,7 @@ public class MenuScene extends BaseScene {
      * onFinished Property is set to display the menu
      */
     public void fadeLogo() {
+        logger.info("fading logo");
         var fade = new FadeTransition(Duration.millis(3000), logo);
         fade.setFromValue(0.0);
         fade.setToValue(1.0);
