@@ -141,6 +141,7 @@ public class MenuScene extends BaseScene {
      * @param event event
      */
     private void startGame(MouseEvent event) {
+        logger.info("Starting Game");
         gameWindow.startChallenge();
     }
     
@@ -149,6 +150,7 @@ public class MenuScene extends BaseScene {
      * @param event event
      */
     private void openInstructions(MouseEvent event) {
+        logger.info("Opening the Instructions Page");
         gameWindow.startInstructions();
     }
     
