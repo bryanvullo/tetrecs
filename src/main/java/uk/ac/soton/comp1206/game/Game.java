@@ -217,7 +217,13 @@ public class Game {
         score.set(score.get() + (lines * blocks * 10 * multiplier.get()));
     }
     
+    /**
+     * set a NextPieceListener use in the nextPiece method
+     * @param listener NextPieceListener
+     */
     public void setNextPieceListener(NextPieceListener listener) {
         nextPieceListener = listener;
     }
+    
+    
 }
