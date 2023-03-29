@@ -2,8 +2,11 @@ package uk.ac.soton.comp1206.scene;
 
 import javafx.animation.Animation;
 import javafx.animation.RotateTransition;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -100,6 +103,7 @@ public class MenuScene extends BaseScene {
     public void initialise() {
         logger.info("initialising the menu scene");
         Multimedia.playMusic("music/menu.mp3"); //background music
+        scene.setOnKeyPressed(this::keyboardInput);
     }
 
     /**
@@ -140,6 +144,25 @@ public class MenuScene extends BaseScene {
         animation.setCycleCount(Animation.INDEFINITE);
         animation.setAutoReverse(true);
         animation.play();
+    }
+    
+    /**
+     * Handles the event which the user pressed a key
+     * @param event KeyEvent of key pressed
+     */
+    private void keyboardInput(KeyEvent event) {
+        logger.info("A key has been Pressed");
+        if (event.getCode() != KeyCode.ESCAPE) return;
+        handleEscape();
+    }
+    
+    /**
+     * Handles the case which the escape key has been pressed
+     * Quits the game
+     */
+    private void handleEscape() {
+        logger.info("Escape Key have been pressed");
+        quit(null);
     }
 
 }
