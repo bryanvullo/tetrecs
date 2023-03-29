@@ -1,11 +1,8 @@
 package uk.ac.soton.comp1206.scene;
 
 import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -24,7 +21,6 @@ import uk.ac.soton.comp1206.ui.GameWindow;
 public class MenuScene extends BaseScene {
 
     private static final Logger logger = LogManager.getLogger(MenuScene.class);
-    private StackPane menuPane;
     private ImageView title;
     
     /**
@@ -45,7 +41,7 @@ public class MenuScene extends BaseScene {
 
         root = new GamePane(gameWindow.getWidth(),gameWindow.getHeight());
     
-        menuPane = new StackPane();
+        var menuPane = new StackPane();
         menuPane.setMaxWidth(gameWindow.getWidth());
         menuPane.setMaxHeight(gameWindow.getHeight());
         menuPane.getStyleClass().add("menu-background");
