@@ -1,8 +1,11 @@
 package uk.ac.soton.comp1206.scene;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -89,6 +92,26 @@ public class InstructionScene extends BaseScene {
      */
     @Override
     public void initialise() {
+        this.getScene().setOnKeyPressed(this::keyboardInput);
+    }
     
+    /**
+     * Handles the event which the user pressed a key
+     * @param event KeyEvent of key pressed
+     */
+    public void keyboardInput(KeyEvent event) {
+        logger.info("A key has been Pressed");
+        if (event.getCode() != KeyCode.ESCAPE) return;
+        handleEscape(null);
+    }
+    
+    /**
+     * Handles the case which the escape key has been pressed
+     * Returns to the Game Menu
+     * @param event key pressed
+     */
+    public void handleEscape(ActionEvent event) {
+        logger.info("Escape Key have been pressed, Returning to the Menu");
+        gameWindow.startMenu();
     }
 }
