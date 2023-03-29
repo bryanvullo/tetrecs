@@ -159,10 +159,10 @@ public class ChallengeScene extends BaseScene {
         //communicator.clearListeners() for multiplayer
     }
     
-    private void handleNextPiece(GamePiece piece) {
-        logger.info("displaying current piece");
-        currentPiece.setPieceToDisplay(nextPiece.getPiece());
-        nextPiece.setPieceToDisplay(piece);
+    private void handleNextPiece(GamePiece current, GamePiece following) {
+        logger.info("displaying current and following pieces");
+        currentPiece.setPieceToDisplay(current);
+        nextPiece.setPieceToDisplay(following);
     }
 
 }

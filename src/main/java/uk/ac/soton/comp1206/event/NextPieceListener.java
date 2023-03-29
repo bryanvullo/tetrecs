@@ -11,7 +11,8 @@ public interface NextPieceListener {
     /**
      * The action of the listener on the next piece
      * This method will need to be overridden on implementation
-     * @param nextPiece The next Game Piece
+     * @param current The current Game Piece
+     * @param following the following Game Piece
      */
-    public void nextPiece(GamePiece nextPiece);
+    public void nextPiece(GamePiece current, GamePiece following);
 }
