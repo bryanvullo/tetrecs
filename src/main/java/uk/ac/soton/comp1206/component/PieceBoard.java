@@ -8,6 +8,8 @@ import uk.ac.soton.comp1206.game.Grid;
 public class PieceBoard extends GameBoard {
     private static final Logger logger = LogManager.getLogger(PieceBoard.class);
     
+    private GamePiece piece;
+    
     /**
      * Create a new GameBoard with its own internal grid, specifying the number of columns and rows,
      * along with the visual width and height.
@@ -39,6 +41,8 @@ public class PieceBoard extends GameBoard {
      * @param piece The GamePiece to display
      */
     public void setPieceToDisplay(GamePiece piece) {
+        if (piece == null) return;
+        this.piece = piece;
         logger.info("Setting Piece {} in PieceBoard", piece);
         var pieceBlocks = piece.getBlocks();
         for (int row = 0; row < rows; row++) {
@@ -46,5 +50,13 @@ public class PieceBoard extends GameBoard {
                     grid.set(col, row, pieceBlocks[col][row]);
             }
         }
+    }
+    
+    /**
+     * Get the Piece that the board holds
+     * @return the GamePiece
+     */
+    public GamePiece getPiece() {
+        return piece;
     }
 }
