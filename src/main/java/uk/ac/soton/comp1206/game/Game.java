@@ -103,7 +103,7 @@ public class Game {
         int x = gameBlock.getX();
         int y = gameBlock.getY();
         
-        logger.info("Block at (" + x + "," + y + ") has been clicked");
+        logger.info("Block at ({},{}) has been clicked", x, y);
         
         if (!grid.canPlayPiece(currentPiece, x, y)) return; //checks piece can be placed
         
@@ -195,9 +195,9 @@ public class Game {
         for (var block : blocksToClear) {
             grid.set(block.getX(), block.getY(), 0);
         }
-        logger.info("clearing {} lines", linesToClear);
-        
+    
         if (linesToClear > 0) {
+            logger.info("clearing {} lines", linesToClear);
             score(linesToClear, blocksToClear.size()); //increase score
             multiplier.set(multiplier.get() + 1); //increase multiplier
         } else {

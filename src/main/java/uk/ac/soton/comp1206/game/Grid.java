@@ -124,8 +124,7 @@ public class Grid {
      * @return if the piece can be played
      */
     public Boolean canPlayPiece(GamePiece piece, int x, int y) {
-        logger.info("checking if piece can be played piece " + piece + " in"
-            + " coordinates (" + x + "," + y + ")");
+        logger.info("checking if {} can be played piece in coordinates ({},{})", piece, x, y);
         var blocks = piece.getBlocks();
         for (int pieceY = 0; pieceY < 3; pieceY++) {
             for (int pieceX = 0; pieceX < 3; pieceX++) {
@@ -156,8 +155,7 @@ public class Grid {
      * @param y     the y coordinate of the clicked block
      */
     public void playPiece(GamePiece piece, int x, int y) {
-        logger.info("playing the piece" + piece + "in coordinates "
-            + "(" + x + "," + y + ")");
+        logger.info("playing the piece {} in coordinates ({},{})", piece, x, y);
         var blocks = piece.getBlocks();
         for (int pieceY = 0; pieceY < 3; pieceY++) {
             for (int pieceX = 0; pieceX < 3; pieceX++) {
