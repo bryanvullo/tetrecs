@@ -152,9 +152,8 @@ public class Game {
      */
     public void nextPiece() {
         currentPiece = nextPiece;
-        logger.info("The current piece is {}", currentPiece);
+        logger.info("Current Piece is {}", currentPiece);
         nextPiece = spawnPiece();
-        logger.info("The next piece is {}", nextPiece);
         nextPieceListener.nextPiece(nextPiece);
     }
     
