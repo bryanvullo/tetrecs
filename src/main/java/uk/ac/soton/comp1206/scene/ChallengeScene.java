@@ -98,6 +98,12 @@ public class ChallengeScene extends BaseScene {
         //Handle block on game board grid being clicked
         board.setOnBlockClick(this::blockClicked);
         
+        //Handle when the game board is right-clicked
+        board.setOnRightClicked(this::handleRightRotate);
+        
+        //Handle when the Current Piece Board is clicked
+        currentPiece.setOnBlockClick(block -> handleRightRotate());
+        
         //Handle next Piece Event
         game.setNextPieceListener(this::handleNextPiece);
     }
@@ -170,6 +176,7 @@ public class ChallengeScene extends BaseScene {
      * Swaps the current and following Pieces
      */
     private void swapCurrentPieces() {
+        logger.info("Swapping current and following pieces");
         game.swapCurrentPiece();
     }
     
@@ -178,6 +185,7 @@ public class ChallengeScene extends BaseScene {
      * Rotates the current piece to the right
      */
     private void handleRightRotate() {
+        logger.info("Rotating current piece to the right");
         game.rotateCurrentPiece();
     }
     
@@ -186,6 +194,7 @@ public class ChallengeScene extends BaseScene {
      * Rotates the current piece to the left
      */
     private void handleLeftRotate() {
+        logger.info("Rotating current piece to the left");
         game.rotateCurrentPiece(3);
     }
     
