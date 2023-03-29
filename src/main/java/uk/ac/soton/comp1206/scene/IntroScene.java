@@ -6,6 +6,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uk.ac.soton.comp1206.media.Multimedia;
 import uk.ac.soton.comp1206.ui.GamePane;
 import uk.ac.soton.comp1206.ui.GameWindow;
 
@@ -33,6 +34,7 @@ public class IntroScene extends BaseScene {
     @Override
     public void initialise() {
         logger.info("Initialising Intro Scene");
+        Multimedia.playAudio("sounds/intro.mp3");
         fadeLogo();
     }
     
@@ -67,7 +69,7 @@ public class IntroScene extends BaseScene {
      */
     public void fadeLogo() {
         logger.info("Fading logo");
-        var fade = new FadeTransition(Duration.millis(3000), logo);
+        var fade = new FadeTransition(Duration.millis(4000), logo);
         fade.setFromValue(0.0);
         fade.setToValue(1.0);
         fade.play();
