@@ -57,8 +57,8 @@ public class GameWindow {
         //Setup communicator
         communicator = new Communicator("ws://ofb-labs.soton.ac.uk:9700");
         
-        //Go to menu
-        startMenu();
+        //Intro: Fade ECS Logo -> then opens menu
+        startIntro();
     }
 
     /**
@@ -72,7 +72,14 @@ public class GameWindow {
         Font.loadFont(getClass().getResourceAsStream("/style/Orbitron-Bold.ttf"),32);
         Font.loadFont(getClass().getResourceAsStream("/style/Orbitron-ExtraBold.ttf"),32);
     }
-
+    
+    /**
+     * Intro Scene: ECS Logo Animation
+     */
+    private void startIntro() {
+        loadScene(new IntroScene(this));
+    }
+    
     /**
      * Display the main menu
      */
