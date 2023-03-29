@@ -6,10 +6,12 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uk.ac.soton.comp1206.media.Multimedia;
 import uk.ac.soton.comp1206.ui.GamePane;
 import uk.ac.soton.comp1206.ui.GameWindow;
 
+/**
+ * This Class creates a Scene which is used to display the ECS Logo animation
+ */
 public class IntroScene extends BaseScene {
     
     private static final Logger logger = LogManager.getLogger(IntroScene.class);
@@ -17,7 +19,7 @@ public class IntroScene extends BaseScene {
     
     /**
      * Create a new scene, passing in the GameWindow the scene will be displayed in
-     *
+     * This scene is used only for the Intro, the ECS Logo animation
      * @param gameWindow the game window
      */
     public IntroScene(GameWindow gameWindow) {
