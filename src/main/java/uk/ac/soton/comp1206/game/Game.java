@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBlockCoordinate;
 import uk.ac.soton.comp1206.event.NextPieceListener;
-import uk.ac.soton.comp1206.ui.GameWindow;
 
 /**
  * The Game class handles the main logic, state and properties of the TetrECS game. Methods to manipulate the game state
@@ -60,7 +59,7 @@ public class Game {
      * field variable which stores the current piece model
      */
     public GamePiece currentPiece;
-    public GamePiece nextPiece;
+    public GamePiece followingPiece;
     
     public NextPieceListener nextPieceListener;
     
@@ -90,7 +89,7 @@ public class Game {
      */
     public void initialiseGame() {
         logger.info("Initialising game");
-        nextPiece();
+        followingPiece = spawnPiece();
         nextPiece();
     }
     
@@ -151,10 +150,10 @@ public class Game {
      * replaces the current GamePiece with a new GamePiece
      */
     public void nextPiece() {
-        currentPiece = nextPiece;
+        currentPiece = followingPiece;
         logger.info("Current Piece is {}", currentPiece);
-        nextPiece = spawnPiece();
-        nextPieceListener.nextPiece(nextPiece);
+        followingPiece = spawnPiece();
+        nextPieceListener.nextPiece(currentPiece, followingPiece);
     }
     
     /**
@@ -225,5 +224,30 @@ public class Game {
         nextPieceListener = listener;
     }
     
+    /**
+     * Method to rotate the current piece
+     */
+    public void rotateCurrentPiece() {
+        currentPiece.rotate();
+        nextPieceListener.nextPiece(currentPiece, followingPiece);
+    }
     
+    /**
+     * Method to rotate the current piece multiple times
+     * @param rotations amount of times to rotate
+     */
+    public void rotateCurrentPiece(int rotations) {
+        currentPiece.rotate(rotations);
+        nextPieceListener.nextPiece(currentPiece, followingPiece);
+    }
+    
+    /**
+     * Method to swap the current and following pieces
+     */
+    public void swapCurrentPiece() {
+        var temp = currentPiece;
+        currentPiece = followingPiece;
+        followingPiece = temp;
+        nextPieceListener.nextPiece(currentPiece, followingPiece);
+    }
 }

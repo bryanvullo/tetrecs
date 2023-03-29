@@ -139,6 +139,20 @@ public class ChallengeScene extends BaseScene {
         if (event.getCode() == KeyCode.ESCAPE) {
             handleEscape();
         }
+        switch (event.getCode()) {
+            case ESCAPE:
+                handleEscape();
+                break;
+            case SPACE: case R:
+                swapCurrentPieces();
+                break;
+            case E: case C: case CLOSE_BRACKET:
+                handleRightRotate();
+                break;
+            case Q: case Z: case OPEN_BRACKET:
+                handleLeftRotate();
+                break;
+        }
     }
     
     /**
@@ -149,6 +163,30 @@ public class ChallengeScene extends BaseScene {
         logger.info("Escape Key have been pressed, Returning to the Menu");
         endGame();
         gameWindow.startMenu();
+    }
+    
+    /**
+     * Handles the case where space or R has been pressed
+     * Swaps the current and following Pieces
+     */
+    private void swapCurrentPieces() {
+        game.swapCurrentPiece();
+    }
+    
+    /**
+     * Handles the case where E, C or ] have been pressed
+     * Rotates the current piece to the right
+     */
+    private void handleRightRotate() {
+        game.rotateCurrentPiece();
+    }
+    
+    /**
+     * Handles the case where Q, Z or [ have been pressed
+     * Rotates the current piece to the left
+     */
+    private void handleLeftRotate() {
+        game.rotateCurrentPiece(3);
     }
     
     /**
