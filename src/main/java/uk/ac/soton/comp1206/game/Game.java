@@ -8,6 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBlockCoordinate;
+import uk.ac.soton.comp1206.event.NextPieceListener;
+import uk.ac.soton.comp1206.ui.GameWindow;
 
 /**
  * The Game class handles the main logic, state and properties of the TetrECS game. Methods to manipulate the game state
@@ -58,6 +60,9 @@ public class Game {
      * field variable which stores the current piece model
      */
     public GamePiece currentPiece;
+    public GamePiece nextPiece;
+    
+    public NextPieceListener nextPieceListener;
     
     /**
      * Create a new game with the specified rows and columns. Creates a corresponding grid model.
@@ -85,7 +90,8 @@ public class Game {
      */
     public void initialiseGame() {
         logger.info("Initialising game");
-        currentPiece = spawnPiece();
+        nextPiece();
+        nextPiece();
     }
     
     /**
@@ -145,7 +151,11 @@ public class Game {
      * replaces the current GamePiece with a new GamePiece
      */
     public void nextPiece() {
-        currentPiece = spawnPiece();
+        currentPiece = nextPiece;
+        logger.info("The current piece is {}", currentPiece);
+        nextPiece = spawnPiece();
+        logger.info("The next piece is {}", nextPiece);
+        nextPieceListener.nextPiece(nextPiece);
     }
     
     /**
@@ -206,5 +216,9 @@ public class Game {
      */
     private void score(int lines, int blocks) {
         score.set(score.get() + (lines * blocks * 10 * multiplier.get()));
+    }
+    
+    public void setNextPieceListener(NextPieceListener listener) {
+        nextPieceListener = listener;
     }
 }

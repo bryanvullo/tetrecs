@@ -11,7 +11,9 @@ import uk.ac.soton.comp1206.component.GameBar;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBoard;
 import uk.ac.soton.comp1206.component.PieceBoard;
+import uk.ac.soton.comp1206.event.NextPieceListener;
 import uk.ac.soton.comp1206.game.Game;
+import uk.ac.soton.comp1206.game.GamePiece;
 import uk.ac.soton.comp1206.game.Grid;
 import uk.ac.soton.comp1206.media.Multimedia;
 import uk.ac.soton.comp1206.ui.GamePane;
@@ -27,7 +29,9 @@ public class ChallengeScene extends BaseScene {
      * Game model of the game to link to UI
      */
     protected Game game;
-
+    private PieceBoard currentPiece;
+    private PieceBoard nextPiece;
+    
     /**
      * Create a new Single Player challenge scene
      * @param gameWindow the Game Window
@@ -81,18 +85,21 @@ public class ChallengeScene extends BaseScene {
         //current piece board
         var currentPieceText = new Text("Current Piece");
         currentPieceText.getStyleClass().add("heading");
-        var currentPiece = new PieceBoard(new Grid(3,3),
+        currentPiece = new PieceBoard(new Grid(3,3),
             gameWindow.getWidth()/4, gameWindow.getWidth()/4);
         sideBar.getChildren().addAll(currentPieceText, currentPiece);
         //next piece board
         var nextPieceText = new Text("Next Piece");
         nextPieceText.getStyleClass().add("heading");
-        var nextPiece = new PieceBoard(new Grid(3,3),
+        nextPiece = new PieceBoard(new Grid(3,3),
             gameWindow.getWidth()/8, gameWindow.getWidth()/8);
         sideBar.getChildren().addAll(nextPieceText, nextPiece);
 
         //Handle block on game board grid being clicked
         board.setOnBlockClick(this::blockClicked);
+        
+        //Handle next Piece Event
+        game.setNextPieceListener(this::handleNextPiece);
     }
 
     /**
@@ -150,6 +157,12 @@ public class ChallengeScene extends BaseScene {
     private void endGame() {
         //TODO: stop game timer and listeners. then open scores
         //communicator.clearListeners() for multiplayer
+    }
+    
+    private void handleNextPiece(GamePiece piece) {
+        logger.info("displaying current piece");
+        currentPiece.setPieceToDisplay(nextPiece.getPiece());
+        nextPiece.setPieceToDisplay(piece);
     }
 
 }
