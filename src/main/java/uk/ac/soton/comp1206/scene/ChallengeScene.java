@@ -1,6 +1,8 @@
 package uk.ac.soton.comp1206.scene;
 
 import javafx.geometry.Pos;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
@@ -117,7 +119,37 @@ public class ChallengeScene extends BaseScene {
     @Override
     public void initialise() {
         logger.info("Initialising Challenge");
+        scene.setOnKeyPressed(this::keyboardInput);
         game.start();
+    }
+    
+    /**
+     * Handles the event which the user pressed a key
+     * @param event KeyEvent of key pressed
+     */
+    private void keyboardInput(KeyEvent event) {
+        logger.info("A key has been Pressed");
+        if (event.getCode() == KeyCode.ESCAPE) {
+            handleEscape();
+        }
+    }
+    
+    /**
+     * Handles the case which the escape key has been pressed
+     * Returns to the Game Menu
+     */
+    private void handleEscape() {
+        logger.info("Escape Key have been pressed, Returning to the Menu");
+        endGame();
+        gameWindow.startMenu();
+    }
+    
+    /**
+     * Method to end the game and clean up
+     */
+    private void endGame() {
+        //TODO: stop game timer and listeners. then open scores
+        //communicator.clearListeners() for multiplayer
     }
 
 }
