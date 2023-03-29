@@ -92,25 +92,24 @@ public class InstructionScene extends BaseScene {
      */
     @Override
     public void initialise() {
-        this.getScene().setOnKeyPressed(this::keyboardInput);
+        scene.setOnKeyPressed(this::keyboardInput);
     }
     
     /**
      * Handles the event which the user pressed a key
      * @param event KeyEvent of key pressed
      */
-    public void keyboardInput(KeyEvent event) {
+    private void keyboardInput(KeyEvent event) {
         logger.info("A key has been Pressed");
         if (event.getCode() != KeyCode.ESCAPE) return;
-        handleEscape(null);
+        handleEscape();
     }
     
     /**
      * Handles the case which the escape key has been pressed
      * Returns to the Game Menu
-     * @param event key pressed
      */
-    public void handleEscape(ActionEvent event) {
+    private void handleEscape() {
         logger.info("Escape Key have been pressed, Returning to the Menu");
         gameWindow.startMenu();
     }
