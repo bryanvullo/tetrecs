@@ -20,19 +20,19 @@ public class Game {
     /**
      * Bindable score integer property of the Game class
      */
-    public SimpleIntegerProperty score = new SimpleIntegerProperty(0);
+    public IntegerProperty score = new SimpleIntegerProperty(0);
     /**
      * Bindable level integer property of the Game class
      */
-    public SimpleIntegerProperty level = new SimpleIntegerProperty(0);
+    public IntegerProperty level = new SimpleIntegerProperty(0);
     /**
      * Bindable lives integer property of the Game class
      */
-    public SimpleIntegerProperty lives = new SimpleIntegerProperty(3);
+    public IntegerProperty lives = new SimpleIntegerProperty(3);
     /**
      * Bindable multiplier integer property of the Game class
      */
-    public SimpleIntegerProperty multiplier = new SimpleIntegerProperty(1);
+    public IntegerProperty multiplier = new SimpleIntegerProperty(1);
     
     /**
      * Number of rows
