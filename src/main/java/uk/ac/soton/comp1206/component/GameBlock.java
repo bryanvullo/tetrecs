@@ -181,5 +181,17 @@ public class GameBlock extends Canvas {
     public void bind(ObservableValue<? extends Number> input) {
         value.bind(input);
     }
+    
+    /**
+     * Method to highlight a block
+     */
+    public void highlightBlock() {
+        var highlightColor = new Color(1, 1, 1, 0.3);
+        var gc = getGraphicsContext2D();
+    
+        //Colour fill
+        gc.setFill(highlightColor);
+        gc.fillRect(0, 0, width, height);
+    }
 
 }

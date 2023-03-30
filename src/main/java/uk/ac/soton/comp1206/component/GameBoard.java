@@ -153,6 +153,10 @@ public class GameBoard extends GridPane {
 
         //Add a mouse click handler to the block to trigger GameBoard blockClicked method
         block.setOnMouseClicked((e) -> blockClicked(e, block));
+        
+        //Events which get triggered when the mouse enters or leaves a game block
+        block.setOnMouseEntered((e) -> aimEnteredBlock(block));
+        block.setOnMouseExited((e) -> aimExitedBlock(block));
 
         return block;
     }
@@ -167,7 +171,7 @@ public class GameBoard extends GridPane {
     
     /**
      * Set the listener to handle an event when the game board is right-clicked
-     * @param listener
+     * @param listener the listener to set on the event
      */
     public void setOnRightClicked(RightClickedListener listener) {
         this.rightClickedListener = listener;
@@ -187,6 +191,22 @@ public class GameBoard extends GridPane {
         } else if (event.getButton() == MouseButton.SECONDARY) {
             rightClickedListener.rightClick();
         }
+    }
+    
+    /**
+     * Handle event to highlight the block where the aim is at
+     * @param block the block to highlight
+     */
+    private void aimEnteredBlock(GameBlock block) {
+        block.highlightBlock();
+    }
+    
+    /**
+     * Handle event to remove highlighting on the block the aim just exited
+     * @param block the block to remove highlighting
+     */
+    private void aimExitedBlock(GameBlock block) {
+        block.paint();
     }
 
 }
