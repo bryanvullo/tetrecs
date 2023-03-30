@@ -104,6 +104,9 @@ public class ChallengeScene extends BaseScene {
         //Handle when the Current Piece Board is clicked
         currentPiece.setOnBlockClick(block -> handleRightRotate());
         
+        //Handle when the Next Piece Board is clicked
+        nextPiece.setOnBlockClick(block -> swapCurrentPieces());
+        
         //Handle next Piece Event
         game.setNextPieceListener(this::handleNextPiece);
     }
@@ -177,6 +180,7 @@ public class ChallengeScene extends BaseScene {
      */
     private void swapCurrentPieces() {
         logger.info("Swapping current and following pieces");
+        Multimedia.playAudio("sounds/transition.wav");
         game.swapCurrentPiece();
     }
     
@@ -186,6 +190,7 @@ public class ChallengeScene extends BaseScene {
      */
     private void handleRightRotate() {
         logger.info("Rotating current piece to the right");
+        Multimedia.playAudio("sounds/rotate.wav");
         game.rotateCurrentPiece();
     }
     
@@ -195,6 +200,7 @@ public class ChallengeScene extends BaseScene {
      */
     private void handleLeftRotate() {
         logger.info("Rotating current piece to the left");
+        Multimedia.playAudio("sounds/rotate.wav");
         game.rotateCurrentPiece(3);
     }
     
