@@ -116,7 +116,9 @@ public class ChallengeScene extends BaseScene {
      * @param gameBlock the Game Block that was clocked
      */
     private void blockClicked(GameBlock gameBlock) {
-        game.blockClicked(gameBlock);
+        var flag = game.blockClicked(gameBlock);
+        if (flag) Multimedia.playAudio("sounds/place.wav");
+        else Multimedia.playAudio("sounds/fail.wav");
     }
 
     /**

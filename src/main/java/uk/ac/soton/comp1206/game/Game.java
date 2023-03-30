@@ -97,18 +97,19 @@ public class Game {
      * Handle what should happen when a particular block is clicked
      * @param gameBlock the block that was clicked
      */
-    public void blockClicked(GameBlock gameBlock) {
+    public Boolean blockClicked(GameBlock gameBlock) {
         //Get the position of this block
         int x = gameBlock.getX();
         int y = gameBlock.getY();
         
         logger.info("Block at ({},{}) has been clicked", x, y);
         
-        if (!grid.canPlayPiece(currentPiece, x, y)) return; //checks piece can be placed
+        if (!grid.canPlayPiece(currentPiece, x, y)) return false; //checks piece can be placed
         
         grid.playPiece(currentPiece, x, y); //plays piece
         afterPiece(); //clear full rows and columns
         nextPiece(); //sets a new piece to the current piece
+        return true;
     }
     
     /**
