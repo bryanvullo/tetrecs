@@ -63,7 +63,6 @@ public class GameBoard extends GridPane {
      */
     private RightClickedListener rightClickedListener;
 
-
     /**
      * Create a new GameBoard, based off a given grid, with a visual width and height.
      * @param grid linked grid
