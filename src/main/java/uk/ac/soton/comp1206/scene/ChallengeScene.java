@@ -212,6 +212,7 @@ public class ChallengeScene extends BaseScene {
     private void endGame() {
         //TODO: stop game timer and listeners. then open scores
         //communicator.clearListeners() for multiplayer
+        //game=null?
     }
     
     private void handleNextPiece(GamePiece current, GamePiece following) {
