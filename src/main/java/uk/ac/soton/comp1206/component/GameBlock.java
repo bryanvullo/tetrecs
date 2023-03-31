@@ -135,15 +135,25 @@ public class GameBlock extends Canvas {
      * Paint this canvas with the given colour
      * @param colour the colour to paint
      */
-    private void paintColor(Paint colour) {
+    private void paintColor(Color colour) {
+        logger.info("Painting block colour {}", colour);
         var gc = getGraphicsContext2D();
 
         //Clear
         gc.clearRect(0,0,width,height);
 
         //Colour fill
-        gc.setFill(colour);
+        gc.setFill(colour.darker());
         gc.fillRect(0,0, width, height);
+        
+        //Inner Block
+        gc.setFill(colour.invert().darker().invert());
+        gc.fillRect(width/8, height/8, width/4*3, height/4*3);
+        
+        //Triangle Pattern
+        gc.setFill(colour);
+        gc.fillPolygon(new double[]{width/8, width/8, width/8*7},
+            new double[]{height/8, height/8*7, height/8*7}, 3);
 
         //Border
         gc.setStroke(Color.BLACK);
