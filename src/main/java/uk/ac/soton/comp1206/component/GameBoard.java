@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.event.BlockClickedListener;
+import uk.ac.soton.comp1206.event.MouseHoverListener;
 import uk.ac.soton.comp1206.event.RightClickedListener;
 import uk.ac.soton.comp1206.game.Grid;
 
@@ -52,6 +53,11 @@ public class GameBoard extends GridPane {
      * The blocks inside the grid
      */
     protected GameBlock[][] blocks;
+    
+    /**
+     * The block the aim is currently set on
+     */
+    private GameBlock aimedBlock;
 
     /**
      * The listener to call when a specific block is clicked
@@ -62,6 +68,11 @@ public class GameBoard extends GridPane {
      * The listener to call when the board has been right-clicked
      */
     private RightClickedListener rightClickedListener;
+    
+    /**
+     * The listener to call when the mouse is hovered on a block
+     */
+    private MouseHoverListener mouseHoverListener;
 
     /**
      * Create a new GameBoard, based off a given grid, with a visual width and height.
@@ -128,6 +139,9 @@ public class GameBoard extends GridPane {
                 createBlock(x,y);
             }
         }
+        
+        //Setting the aim at the top left
+        aimedBlock = blocks[0][0];
     }
 
     /**
@@ -154,9 +168,8 @@ public class GameBoard extends GridPane {
         //Add a mouse click handler to the block to trigger GameBoard blockClicked method
         block.setOnMouseClicked((e) -> blockClicked(e, block));
         
-        //Events which get triggered when the mouse enters or leaves a game block
-        block.setOnMouseEntered((e) -> aimEnteredBlock(block));
-        block.setOnMouseExited((e) -> aimExitedBlock(block));
+        //Events which get triggered when the mouse enters a game block
+        block.setOnMouseEntered((e) -> mouseHoverListener.mouseHover(block));
 
         return block;
     }
@@ -197,7 +210,9 @@ public class GameBoard extends GridPane {
      * Handle event to highlight the block where the aim is at
      * @param block the block to highlight
      */
-    private void aimEnteredBlock(GameBlock block) {
+    public void aimEnteredBlock(GameBlock block) {
+        aimExitedBlock(aimedBlock);
+        aimedBlock = block;
         block.highlightBlock();
     }
     
@@ -207,6 +222,24 @@ public class GameBoard extends GridPane {
      */
     private void aimExitedBlock(GameBlock block) {
         block.paint();
+    }
+    
+    /**
+     * This method is used to move the 'Aimed' block by a certain offset defined by the parameters
+     * @param x how much the aim is moving horizontally
+     * @param y how much the aim is moving vertically
+     */
+    public void moveAimedBlock(int x, int y) {
+        var block = blocks[aimedBlock.getX() + x][aimedBlock.getY() + y];
+        aimEnteredBlock(block);
+    }
+    
+    /**
+     * This method sets the listener for the Mouse Hover Event
+     * @param listener the listener to be set
+     */
+    public void setOnHover(MouseHoverListener listener) {
+        mouseHoverListener = listener;
     }
 
 }

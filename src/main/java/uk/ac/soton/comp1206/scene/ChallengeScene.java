@@ -31,6 +31,7 @@ public class ChallengeScene extends BaseScene {
     protected Game game;
     private PieceBoard currentPiece;
     private PieceBoard nextPiece;
+    private GameBoard board;
     
     /**
      * Create a new Single Player challenge scene
@@ -63,8 +64,8 @@ public class ChallengeScene extends BaseScene {
 
         var mainPane = new BorderPane();
         challengePane.getChildren().add(mainPane);
-
-        var board = new GameBoard(game.getGrid(),gameWindow.getWidth()/2,gameWindow.getWidth()/2);
+    
+        board = new GameBoard(game.getGrid(),gameWindow.getWidth()/2,gameWindow.getWidth()/2);
         mainPane.setCenter(board);
         
         //adding UI components: score, lives, level and multiplier
@@ -94,6 +95,9 @@ public class ChallengeScene extends BaseScene {
         nextPiece = new PieceBoard(new Grid(3,3),
             gameWindow.getWidth()/8, gameWindow.getWidth()/8);
         sideBar.getChildren().addAll(nextPieceText, nextPiece);
+        
+        //Handle when mouse hovers over a game board block
+        board.setOnHover(this::handleHover);
 
         //Handle block on game board grid being clicked
         board.setOnBlockClick(this::blockClicked);
@@ -151,18 +155,14 @@ public class ChallengeScene extends BaseScene {
             handleEscape();
         }
         switch (event.getCode()) {
-            case ESCAPE:
-                handleEscape();
-                break;
-            case SPACE: case R:
-                swapCurrentPieces();
-                break;
-            case E: case C: case CLOSE_BRACKET:
-                handleRightRotate();
-                break;
-            case Q: case Z: case OPEN_BRACKET:
-                handleLeftRotate();
-                break;
+            case ESCAPE -> handleEscape();
+            case SPACE, R -> swapCurrentPieces();
+            case E, C, CLOSE_BRACKET -> handleRightRotate();
+            case Q, Z, OPEN_BRACKET -> handleLeftRotate();
+            case W, UP -> board.moveAimedBlock(0, -1);
+            case S, DOWN -> board.moveAimedBlock(0, 1);
+            case A, LEFT -> board.moveAimedBlock(-1, 0);
+            case D, RIGHT -> board.moveAimedBlock(1, 0);
         }
     }
     
@@ -204,6 +204,14 @@ public class ChallengeScene extends BaseScene {
         logger.info("Rotating current piece to the left");
         Multimedia.playAudio("sounds/rotate.wav");
         game.rotateCurrentPiece(3);
+    }
+    
+    /**
+     * Set the implementation for the Mouse Hover Listener
+     * @param block the block that is being hovered over
+     */
+    private void handleHover(GameBlock block) {
+        board.aimEnteredBlock(block);
     }
     
     /**
