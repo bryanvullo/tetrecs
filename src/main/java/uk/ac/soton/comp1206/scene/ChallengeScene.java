@@ -160,7 +160,15 @@ public class ChallengeScene extends BaseScene {
             case S, DOWN -> board.moveAimedBlock(0, 1);
             case A, LEFT -> board.moveAimedBlock(-1, 0);
             case D, RIGHT -> board.moveAimedBlock(1, 0);
+            case ENTER -> handleEnter();
         }
+    }
+    
+    /**
+     * Handles the event when the Enter key is pressed
+     */
+    private void handleEnter() {
+        blockClicked(board.getAimedBlock());
     }
     
     /**

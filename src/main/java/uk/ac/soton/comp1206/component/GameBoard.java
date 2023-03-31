@@ -241,5 +241,13 @@ public class GameBoard extends GridPane {
     public void setOnHover(MouseHoverListener listener) {
         mouseHoverListener = listener;
     }
+    
+    /**
+     * This returns the block which is being aimed at
+     * @return the aimed block
+     */
+    public GameBlock getAimedBlock() {
+        return aimedBlock;
+    }
 
 }
