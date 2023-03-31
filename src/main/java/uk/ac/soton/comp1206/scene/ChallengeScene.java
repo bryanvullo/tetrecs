@@ -151,9 +151,6 @@ public class ChallengeScene extends BaseScene {
      */
     private void keyboardInput(KeyEvent event) {
         logger.info("A key has been Pressed");
-        if (event.getCode() == KeyCode.ESCAPE) {
-            handleEscape();
-        }
         switch (event.getCode()) {
             case ESCAPE -> handleEscape();
             case SPACE, R -> swapCurrentPieces();
