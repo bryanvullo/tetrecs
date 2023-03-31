@@ -169,7 +169,11 @@ public class GameBoard extends GridPane {
         block.setOnMouseClicked((e) -> blockClicked(e, block));
         
         //Events which get triggered when the mouse enters a game block
-        block.setOnMouseEntered((e) -> mouseHoverListener.mouseHover(block));
+        block.setOnMouseEntered((e) -> {
+            if (mouseHoverListener!=null) {
+                mouseHoverListener.mouseHover(block);
+            }
+        });
 
         return block;
     }
