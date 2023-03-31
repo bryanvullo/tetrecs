@@ -189,9 +189,21 @@ public class GameBlock extends Canvas {
         var highlightColor = new Color(1, 1, 1, 0.3);
         var gc = getGraphicsContext2D();
     
-        //Colour fill
+        //Draw the highlight
         gc.setFill(highlightColor);
         gc.fillRect(0, 0, width, height);
+    }
+    
+    /**
+     * Method to paint a circle highlight in the middle of the block
+     */
+    public void paintCircle() {
+        var circleColor = new Color(1, 1, 1, 0.7);
+        var gc = getGraphicsContext2D();
+        
+        //Draw the circle
+        gc.setFill(circleColor);
+        gc.fillOval(width/4, height/4, width/2, height/2);
     }
 
 }

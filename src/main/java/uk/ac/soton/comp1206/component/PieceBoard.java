@@ -41,6 +41,7 @@ public class PieceBoard extends GameBoard {
      * @param piece The GamePiece to display
      */
     public void setPieceToDisplay(GamePiece piece) {
+        logger.info("Setting Piece to display {}", piece);
         if (piece == null) return;
         this.piece = piece;
         logger.info("Setting Piece {} in PieceBoard", piece);
@@ -50,6 +51,16 @@ public class PieceBoard extends GameBoard {
                     grid.set(col, row, pieceBlocks[col][row]);
             }
         }
+        paintMiddleCircle();
+    }
+    
+    /**
+     * Method to determine the middle block in the piece board and paint a circle highlight in it
+     */
+    private void paintMiddleCircle() {
+        logger.info("Painting middle circle in the piece board");
+        var middleBlock = getBlock(blocks[0].length/2, blocks.length/2);
+        middleBlock.paintCircle();
     }
     
     /**
