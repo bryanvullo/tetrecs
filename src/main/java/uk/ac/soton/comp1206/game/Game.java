@@ -2,6 +2,8 @@ package uk.ac.soton.comp1206.game;
 
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.logging.log4j.LogManager;
@@ -56,6 +58,8 @@ public class Game {
      */
     private final Random random = new Random();
     
+    private Timer timer;
+    
     /**
      * field variable which stores the current piece model
      */
@@ -93,6 +97,18 @@ public class Game {
         logger.info("Initialising game");
         followingPiece = spawnPiece();
         nextPiece();
+        //setting timer
+        timer = new Timer();
+        var timerTask = new TimerTask() {
+            /**
+             * The action to be performed by this timer task.
+             */
+            @Override
+            public void run() {
+                gameLoop();
+            }
+        };
+        timer.schedule(timerTask, getTimerDelay());
     }
     
     /**
@@ -164,7 +180,7 @@ public class Game {
      * Clearing lines
      */
     public void afterPiece() {
-        logger.info("checking if any rows or columns are full");
+        logger.info("Checking if any rows or columns are full");
         var blocksToClear = new HashSet<GameBlockCoordinate>();
         int linesToClear = 0;
         //checking rows
@@ -193,12 +209,6 @@ public class Game {
                 linesToClear++;
             }
         }
-        
-        //clear all blocks in the clear list
-        for (var block : blocksToClear) {
-            grid.set(block.getX(), block.getY(), 0);
-        }
-    
     
         if (linesToClear > 0) {
             logger.info("clearing {} lines", linesToClear);
@@ -207,12 +217,32 @@ public class Game {
         } else {
             multiplier.set(1);
         }
+        
+        //Checks if empty. The following code only executes if blocks are being cleared.
+        if (blocksToClear.isEmpty()) return;
     
         //updating level
         level.set(score.get() / 1000);
+        
+        //clear all blocks in the clear list
+        for (var block : blocksToClear) {
+            grid.set(block.getX(), block.getY(), 0);
+        }
     
         //telling listener of blocks to clear
         lineClearedListener.lineCleared(blocksToClear.toArray(new GameBlockCoordinate[0]));
+        
+        //resetting timer
+        timer.cancel();
+        timer = new Timer();
+        var timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                gameLoop();
+            }
+        };
+        timer.schedule(timerTask, getTimerDelay());
+    
     }
     
     /**
@@ -265,5 +295,37 @@ public class Game {
         currentPiece = followingPiece;
         followingPiece = temp;
         nextPieceListener.nextPiece(currentPiece, followingPiece);
+    }
+    
+    /**
+     * This method calculates the timer delay in respect to the current level
+     * @return the timer delay in ms
+     */
+    private int getTimerDelay() {
+        logger.info("Calculating timer delay");
+        var time = 12000 - (500 * level.get());
+        if (time < 2500) time = 2500;
+        return time;
+    }
+    
+    /**
+     * This method handles when the timer reaches zero
+     * lose a life and current piece, timer and multiplier is reset.
+     */
+    private void gameLoop() {
+        logger.info("Timer over");
+        lives.set(lives.get() - 1);
+        nextPiece();
+        multiplier.set(1);
+        //resetting timer
+        timer.cancel();
+        timer = new Timer();
+        var timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                gameLoop();
+            }
+        };
+        timer.schedule(timerTask, getTimerDelay());
     }
 }
