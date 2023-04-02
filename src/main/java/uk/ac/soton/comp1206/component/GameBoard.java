@@ -253,5 +253,16 @@ public class GameBoard extends GridPane {
     public GameBlock getAimedBlock() {
         return aimedBlock;
     }
+    
+    /**
+     * This method takes a set of coordinates, fetches the block at that coordinate
+     * and calls the fadeOut method on it
+     * @param coordinates a set of GameBlockCoordinates to fade out
+     */
+    public void fadeOut(GameBlockCoordinate[] coordinates) {
+        for (var coordinate : coordinates) {
+            blocks[coordinate.getX()][coordinate.getY()].fadeOut();
+        }
+    }
 
 }
