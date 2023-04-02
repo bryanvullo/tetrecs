@@ -1,7 +1,6 @@
 package uk.ac.soton.comp1206.scene;
 
 import javafx.geometry.Pos;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -9,9 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBar;
 import uk.ac.soton.comp1206.component.GameBlock;
+import uk.ac.soton.comp1206.component.GameBlockCoordinate;
 import uk.ac.soton.comp1206.component.GameBoard;
 import uk.ac.soton.comp1206.component.PieceBoard;
-import uk.ac.soton.comp1206.event.NextPieceListener;
 import uk.ac.soton.comp1206.game.Game;
 import uk.ac.soton.comp1206.game.GamePiece;
 import uk.ac.soton.comp1206.game.Grid;
@@ -59,7 +58,7 @@ public class ChallengeScene extends BaseScene {
         var challengePane = new StackPane();
         challengePane.setMaxWidth(gameWindow.getWidth());
         challengePane.setMaxHeight(gameWindow.getHeight());
-        challengePane.getStyleClass().add("menu-background");
+        challengePane.getStyleClass().add("challenge-background");
         root.getChildren().add(challengePane);
 
         var mainPane = new BorderPane();
@@ -113,6 +112,9 @@ public class ChallengeScene extends BaseScene {
         
         //Handle next Piece Event
         game.setNextPieceListener(this::handleNextPiece);
+        
+        //Handle Lines Cleared Event
+        game.setLineClearedListener(this::handleLineCleared);
     }
 
     /**
@@ -228,10 +230,26 @@ public class ChallengeScene extends BaseScene {
         //game=null?
     }
     
+    /**
+     * This method handles the Next Piece Event
+     * Displays the current and following game pieces in their respective boards
+     * @param current The current Piece to display
+     * @param following The following Piece to display
+     */
     private void handleNextPiece(GamePiece current, GamePiece following) {
         logger.info("displaying current and following pieces");
         currentPiece.setPieceToDisplay(current);
         nextPiece.setPieceToDisplay(following);
+    }
+    
+    /**
+     * This method handles the Line Cleared Event
+     * takes a set of GameBlockCoordinates and called the fadeOut method on it
+     * @param coordinates the coordinates of the blocks to fade out
+     */
+    private void handleLineCleared(GameBlockCoordinate[] coordinates) {
+        logger.info("DEBUG handling line cleared");
+        board.fadeOut(coordinates);
     }
 
 }
