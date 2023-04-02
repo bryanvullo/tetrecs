@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBlockCoordinate;
+import uk.ac.soton.comp1206.event.LineClearedListener;
 import uk.ac.soton.comp1206.event.NextPieceListener;
 
 /**
@@ -61,7 +62,8 @@ public class Game {
     public GamePiece currentPiece;
     public GamePiece followingPiece;
     
-    public NextPieceListener nextPieceListener;
+    private NextPieceListener nextPieceListener;
+    private LineClearedListener lineClearedListener;
     
     /**
      * Create a new game with the specified rows and columns. Creates a corresponding grid model.
@@ -191,10 +193,12 @@ public class Game {
                 linesToClear++;
             }
         }
+        
         //clear all blocks in the clear list
         for (var block : blocksToClear) {
             grid.set(block.getX(), block.getY(), 0);
         }
+    
     
         if (linesToClear > 0) {
             logger.info("clearing {} lines", linesToClear);
@@ -203,9 +207,12 @@ public class Game {
         } else {
             multiplier.set(1);
         }
-        
+    
         //updating level
         level.set(score.get() / 1000);
+    
+        //telling listener of blocks to clear
+        lineClearedListener.lineCleared(blocksToClear.toArray(new GameBlockCoordinate[0]));
     }
     
     /**
@@ -223,6 +230,14 @@ public class Game {
      */
     public void setNextPieceListener(NextPieceListener listener) {
         nextPieceListener = listener;
+    }
+    
+    /**
+     * Set the listener for when lines are cleared
+     * @param listener The listener to set
+     */
+    public void setLineClearedListener(LineClearedListener listener) {
+        lineClearedListener = listener;
     }
     
     /**
