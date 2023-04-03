@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBlockCoordinate;
+import uk.ac.soton.comp1206.event.GameLoopListener;
 import uk.ac.soton.comp1206.event.LineClearedListener;
 import uk.ac.soton.comp1206.event.NextPieceListener;
 
@@ -68,6 +69,7 @@ public class Game {
     
     private NextPieceListener nextPieceListener;
     private LineClearedListener lineClearedListener;
+    private GameLoopListener gameLoopListener;
     
     /**
      * Create a new game with the specified rows and columns. Creates a corresponding grid model.
@@ -109,6 +111,7 @@ public class Game {
             }
         };
         timer.schedule(timerTask, getTimerDelay());
+        gameLoopListener.gameLoop(getTimerDelay());
     }
     
     /**
@@ -217,9 +220,6 @@ public class Game {
         } else {
             multiplier.set(1);
         }
-        
-        //Checks if empty. The following code only executes if blocks are being cleared.
-        if (blocksToClear.isEmpty()) return;
     
         //updating level
         level.set(score.get() / 1000);
@@ -242,7 +242,7 @@ public class Game {
             }
         };
         timer.schedule(timerTask, getTimerDelay());
-    
+        gameLoopListener.gameLoop(getTimerDelay());
     }
     
     /**
@@ -268,6 +268,14 @@ public class Game {
      */
     public void setLineClearedListener(LineClearedListener listener) {
         lineClearedListener = listener;
+    }
+    
+    /**
+     * Set the GameLoopListener for when the game timer is reset
+     * @param listener the listener to set
+     */
+    public void setGameLoopListener(GameLoopListener listener) {
+        gameLoopListener = listener;
     }
     
     /**
@@ -314,6 +322,10 @@ public class Game {
      */
     private void gameLoop() {
         logger.info("Timer over");
+        if (lives.get() <= 0) {
+            endGame(); //if no more lives, end game
+            return;
+        }
         lives.set(lives.get() - 1);
         nextPiece();
         multiplier.set(1);
@@ -327,5 +339,18 @@ public class Game {
             }
         };
         timer.schedule(timerTask, getTimerDelay());
+        gameLoopListener.gameLoop(getTimerDelay());
+    }
+    
+    /**
+     * This method ends the game by cancelling the timer and removing all the listeners
+     */
+    public void endGame() {
+        logger.info("Ending the game");
+        timer.cancel();
+        timer = null;
+        nextPieceListener = null;
+        lineClearedListener = null;
+        gameLoopListener = null;
     }
 }

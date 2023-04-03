@@ -1,9 +1,14 @@
 package uk.ac.soton.comp1206.scene;
 
+import javafx.animation.Interpolator;
+import javafx.animation.Transition;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBar;
@@ -31,6 +36,7 @@ public class ChallengeScene extends BaseScene {
     private PieceBoard currentPiece;
     private PieceBoard nextPiece;
     private GameBoard board;
+    private Rectangle timer;
     
     /**
      * Create a new Single Player challenge scene
@@ -95,6 +101,14 @@ public class ChallengeScene extends BaseScene {
             gameWindow.getWidth()/8, gameWindow.getWidth()/8);
         sideBar.getChildren().addAll(nextPieceText, nextPiece);
         
+        //Bottom timer bar
+        var bottomBar = new HBox();
+        bottomBar.setAlignment(Pos.CENTER_LEFT);
+        mainPane.setBottom(bottomBar);
+    
+        timer = new Rectangle(gameWindow.getWidth(), 25);
+        bottomBar.getChildren().add(timer);
+        
         //Handle when mouse hovers over a game board block
         board.setOnHover(this::handleHover);
 
@@ -115,6 +129,9 @@ public class ChallengeScene extends BaseScene {
         
         //Handle Lines Cleared Event
         game.setLineClearedListener(this::handleLineCleared);
+        
+        //Handle the timer reset event
+        game.setGameLoopListener(this::handleGameLoop);
     }
 
     /**
@@ -225,9 +242,9 @@ public class ChallengeScene extends BaseScene {
      * Method to end the game and clean up
      */
     private void endGame() {
-        //TODO: stop game timer and listeners. then open scores
         //communicator.clearListeners() for multiplayer
-        //game=null?
+        game.endGame();
+        gameWindow.startScores(game);
     }
     
     /**
@@ -251,5 +268,25 @@ public class ChallengeScene extends BaseScene {
         logger.info("DEBUG handling line cleared");
         board.fadeOut(coordinates);
     }
-
+    
+    /**
+     * This method handles the time bar animation
+     * @param time the duration of the current timer delay
+     */
+    private void handleGameLoop(int time) {
+        var animation = new Transition() {
+            {
+                setCycleDuration(Duration.millis(time));
+                interpolatorProperty().set(Interpolator.LINEAR);
+            }
+            @Override
+            protected void interpolate(double frac) {
+                frac = (float) frac;
+                timer.widthProperty().set(gameWindow.getWidth() * (1-frac));
+                var colour = Color.color(1 * frac,1 * (1-frac),0);
+                timer.fillProperty().set(colour);
+            }
+        };
+        animation.play();
+    }
 }
