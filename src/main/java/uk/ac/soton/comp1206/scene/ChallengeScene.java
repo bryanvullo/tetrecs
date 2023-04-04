@@ -1,5 +1,8 @@
 package uk.ac.soton.comp1206.scene;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Pos;
@@ -37,6 +40,8 @@ public class ChallengeScene extends BaseScene {
     private PieceBoard nextPiece;
     private GameBoard board;
     private Rectangle timer;
+    private String scoresFile = getClass().getResource("/scores.txt").getFile();
+    private Scanner reader;
     
     /**
      * Create a new Single Player challenge scene
@@ -88,13 +93,23 @@ public class ChallengeScene extends BaseScene {
         sideBar.alignmentProperty().set(Pos.CENTER);
         mainPane.setRight(sideBar);
         
-        //current piece board
+            //High score box
+        var highScoreBox = new VBox();
+        highScoreBox.setAlignment(Pos.CENTER);
+        sideBar.getChildren().add(highScoreBox);
+        var highScoreText = new Text("High Score");
+        highScoreText.getStyleClass().add("heading");
+        var highScore = new Text(getHighScore().toString());
+        highScore.getStyleClass().add("hiscore");
+        highScoreBox.getChildren().addAll(highScoreText, highScore);
+        
+            //current piece board
         var currentPieceText = new Text("Current Piece");
         currentPieceText.getStyleClass().add("heading");
         currentPiece = new PieceBoard(new Grid(3,3),
             gameWindow.getWidth()/4, gameWindow.getWidth()/4);
         sideBar.getChildren().addAll(currentPieceText, currentPiece);
-        //next piece board
+            //next piece board
         var nextPieceText = new Text("Next Piece");
         nextPieceText.getStyleClass().add("heading");
         nextPiece = new PieceBoard(new Grid(3,3),
@@ -245,7 +260,7 @@ public class ChallengeScene extends BaseScene {
      * Method to end the game and clean up
      */
     private void closeGame() {
-        //communicator.clearListeners() for multiplayer
+        //communicator.clearListeners() for multiplayer?
         game.endGame();
     }
     
@@ -297,5 +312,23 @@ public class ChallengeScene extends BaseScene {
             }
         };
         animation.play();
+    }
+    
+    /**
+     * gets the High Score from the scores file
+     * @return the high score Integer
+     */
+    private Integer getHighScore() {
+        logger.info("Getting High Score from Local Scores File");
+        var file = new File(scoresFile);
+        try {
+            reader = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            logger.debug("Local Scores file not found");
+        }
+        var topScore = reader.nextLine();
+        var pair = topScore.split(":");
+        var score = Integer.parseInt(pair[1]);
+        return score;
     }
 }
