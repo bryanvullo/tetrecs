@@ -4,12 +4,14 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBlockCoordinate;
+import uk.ac.soton.comp1206.event.GameEndListener;
 import uk.ac.soton.comp1206.event.GameLoopListener;
 import uk.ac.soton.comp1206.event.LineClearedListener;
 import uk.ac.soton.comp1206.event.NextPieceListener;
@@ -70,6 +72,7 @@ public class Game {
     private NextPieceListener nextPieceListener;
     private LineClearedListener lineClearedListener;
     private GameLoopListener gameLoopListener;
+    private GameEndListener gameEndListener;
     
     /**
      * Create a new game with the specified rows and columns. Creates a corresponding grid model.
@@ -279,6 +282,13 @@ public class Game {
     }
     
     /**
+     * Set the Game End Listener for when the game ends
+     */
+    public void setGameEndListener(GameEndListener listener) {
+        gameEndListener = listener;
+    }
+    
+    /**
      * Method to rotate the current piece
      */
     public void rotateCurrentPiece() {
@@ -324,6 +334,7 @@ public class Game {
         logger.info("Timer over");
         if (lives.get() <= 0) {
             endGame(); //if no more lives, end game
+            Platform.runLater(() -> gameEndListener.gameEnd());
             return;
         }
         lives.set(lives.get() - 1);
