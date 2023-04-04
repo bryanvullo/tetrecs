@@ -249,6 +249,9 @@ public class ChallengeScene extends BaseScene {
         game.endGame();
     }
     
+    /**
+     * Method to start the Scores screen once the game ends
+     */
     private void handleEndGame() {
         gameWindow.startScores(game);
     }
