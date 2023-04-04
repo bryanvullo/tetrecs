@@ -132,6 +132,9 @@ public class ChallengeScene extends BaseScene {
         
         //Handle the timer reset event
         game.setGameLoopListener(this::handleGameLoop);
+        
+        //Handle the end of the game
+        game.setGameEndListener(this::handleEndGame);
     }
 
     /**
@@ -196,7 +199,7 @@ public class ChallengeScene extends BaseScene {
      */
     private void handleEscape() {
         logger.info("Escape Key have been pressed, Returning to the Menu");
-        endGame();
+        closeGame();
         gameWindow.startMenu();
     }
     
@@ -241,9 +244,12 @@ public class ChallengeScene extends BaseScene {
     /**
      * Method to end the game and clean up
      */
-    private void endGame() {
+    private void closeGame() {
         //communicator.clearListeners() for multiplayer
         game.endGame();
+    }
+    
+    private void handleEndGame() {
         gameWindow.startScores(game);
     }
     
