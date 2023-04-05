@@ -137,7 +137,6 @@ public class GameBlock extends Canvas {
      * @param colour the colour to paint
      */
     private void paintColor(Color colour) {
-        logger.info("Painting block colour {}", colour);
         var gc = getGraphicsContext2D();
         //Clear
         gc.clearRect(0,0,width,height);
