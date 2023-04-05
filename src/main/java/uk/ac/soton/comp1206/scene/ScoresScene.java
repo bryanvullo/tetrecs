@@ -43,7 +43,6 @@ public class ScoresScene extends BaseScene {
     private BorderPane mainPane;
     private Comparator<Pair<String, Integer>> pairComparator = Comparator.comparingInt(Pair::getValue);
     private Comparator comparator = Collections.reverseOrder(pairComparator);
-    private String playerName;
     private ScoreList scoreList;
     
     /**
@@ -69,17 +68,12 @@ public class ScoresScene extends BaseScene {
     public void initialise() {
         scene.setOnKeyPressed(this::keyboardInput); //keyboard input to escape scene
         
-        //loads scores
         loadScores();
+        
         for (var pair : localScores) { //checks if game score has beaten any of the high scores
             var score = pair.getValue();
-            if (game.score.get() > score) { //removes the last score, adds the new score and re-sorts list
-                getPlayerName();
-                var playerPair = new Pair(playerName, game.score.getValue());
-                localScores.remove(localScores.getSize()-1);
-                localScores.add(playerPair);
-                localScores.sort(comparator);
-                writeScores(); //write new high scores to the file
+            if (game.score.get() > score) {
+                displayGetNameBox();
                 break;
             }
         }
@@ -130,7 +124,7 @@ public class ScoresScene extends BaseScene {
     /**
      * Method to get the name of the player to display in the high scores
      */
-    private void getPlayerName() {
+    private void displayGetNameBox() {
         var scores = mainPane.getCenter(); //temporarily hold this node to display something else
     
         var newScoreBox = new VBox();
@@ -147,8 +141,15 @@ public class ScoresScene extends BaseScene {
         
         //button action: set name and restore scores node at center
         button.setOnAction((event) -> {
-           playerName = field.getText();
-           mainPane.setCenter(scores);
+            mainPane.setCenter(scores);
+            updateScores(field.getText());
+        });
+        
+        field.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                mainPane.setCenter(scores);
+                updateScores(field.getText());
+            }
         });
     }
     
@@ -158,9 +159,9 @@ public class ScoresScene extends BaseScene {
     private void loadScores() {
         logger.info("Loading Local Scores");
         var file = new File(scoresFile);
-        if (!file.exists()) writeDefaultScores();
         try {
             reader = new Scanner(file);
+            if (!reader.hasNextLine()) writeDefaultScores(); //check if empty
         } catch (FileNotFoundException e) {
             logger.debug("Local Scores file not found");
         }
@@ -238,5 +239,19 @@ public class ScoresScene extends BaseScene {
     private void handleEscape() {
         logger.info("Escape Key have been pressed, Returning to the Menu from Scores Scene");
         gameWindow.startMenu();
+    }
+    
+    /**
+     * This method handles updating the local scores list and file when the player gets a new high score
+     * @param playerName the name entered by the player
+     */
+    private void updateScores(String playerName) {
+        logger.info("Updating the High Scores");
+        var playerPair = new Pair(playerName, game.score.getValue());
+        localScores.remove(localScores.getSize()-1); //remove the lowest score
+        localScores.add(playerPair); //Add the player:score pair to the ArrayList
+        localScores.sort(comparator); //sort the new list to put new pair in place
+        
+        writeScores(); //write new high scores to the file
     }
 }
