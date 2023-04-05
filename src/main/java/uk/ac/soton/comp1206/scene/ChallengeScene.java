@@ -46,6 +46,8 @@ public class ChallengeScene extends BaseScene {
     private String scoresFile = getClass().getResource("/scores.txt").getFile();
     private Scanner reader;
     private FileWriter writer;
+    private Text highScore;
+    private Integer localHighScore;
     
     /**
      * Create a new Single Player challenge scene
@@ -103,14 +105,10 @@ public class ChallengeScene extends BaseScene {
         sideBar.getChildren().add(highScoreBox);
         var highScoreText = new Text("High Score");
         highScoreText.getStyleClass().add("heading");
-        var highScoreField = new Text(getHighScore().toString());
-        var highScore = new SimpleIntegerProperty();
-        //TODO make it so highscore changes dynamically if the player beats it
-        if (getHighScore() < game.score.get()) {
-            highScore.bind(game.score);
-        }
-        highScoreField.getStyleClass().add("hiscore");
-        highScoreBox.getChildren().addAll(highScoreText, highScoreField);
+        localHighScore = getHighScore();
+        highScore = new Text(localHighScore.toString());
+        highScore.getStyleClass().add("hiscore");
+        highScoreBox.getChildren().addAll(highScoreText, highScore);
         
             //current piece board
         var currentPieceText = new Text("Current Piece");
@@ -167,8 +165,18 @@ public class ChallengeScene extends BaseScene {
      */
     private void blockClicked(GameBlock gameBlock) {
         var flag = game.blockClicked(gameBlock);
-        if (flag) Multimedia.playAudio("sounds/place.wav");
+        if (flag) {
+            Multimedia.playAudio("sounds/place.wav");
+            bindHighScore();
+        }
         else Multimedia.playAudio("sounds/fail.wav");
+    }
+    
+    private void bindHighScore() {
+        logger.info("Checking if high score beats local high score");
+        if (game.score.get() > localHighScore) {
+            highScore.textProperty().bind(game.score.asString());
+        }
     }
 
     /**
@@ -350,7 +358,7 @@ public class ChallengeScene extends BaseScene {
         var file = new File(scoresFile);
         String data = "";
         for (int scoreCount = 10; scoreCount > 0; scoreCount--) {
-            data = data + "Bryan:" + (scoreCount * 1000) + "\n";
+            data = data + "Bryan:" + (scoreCount * 100) + "\n";
         }
         //write default data in the file
         try {
