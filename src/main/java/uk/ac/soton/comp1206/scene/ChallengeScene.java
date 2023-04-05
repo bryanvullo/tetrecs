@@ -2,9 +2,12 @@ package uk.ac.soton.comp1206.scene;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -42,6 +45,7 @@ public class ChallengeScene extends BaseScene {
     private Rectangle timer;
     private String scoresFile = getClass().getResource("/scores.txt").getFile();
     private Scanner reader;
+    private FileWriter writer;
     
     /**
      * Create a new Single Player challenge scene
@@ -99,9 +103,14 @@ public class ChallengeScene extends BaseScene {
         sideBar.getChildren().add(highScoreBox);
         var highScoreText = new Text("High Score");
         highScoreText.getStyleClass().add("heading");
-        var highScore = new Text(getHighScore().toString());
-        highScore.getStyleClass().add("hiscore");
-        highScoreBox.getChildren().addAll(highScoreText, highScore);
+        var highScoreField = new Text(getHighScore().toString());
+        var highScore = new SimpleIntegerProperty();
+        //TODO make it so highscore changes dynamically if the player beats it
+        if (getHighScore() < game.score.get()) {
+            highScore.bind(game.score);
+        }
+        highScoreField.getStyleClass().add("hiscore");
+        highScoreBox.getChildren().addAll(highScoreText, highScoreField);
         
             //current piece board
         var currentPieceText = new Text("Current Piece");
@@ -323,6 +332,7 @@ public class ChallengeScene extends BaseScene {
         var file = new File(scoresFile);
         try {
             reader = new Scanner(file);
+            if (!reader.hasNextLine()) writeDefaultScores();
         } catch (FileNotFoundException e) {
             logger.debug("Local Scores file not found");
         }
@@ -330,5 +340,26 @@ public class ChallengeScene extends BaseScene {
         var pair = topScore.split(":");
         var score = Integer.parseInt(pair[1]);
         return score;
+    }
+    
+    /**
+     * Write default scores into a file to populate it initially
+     */
+    private void writeDefaultScores() {
+        logger.info("Writing Default Scores");
+        var file = new File(scoresFile);
+        String data = "";
+        for (int scoreCount = 10; scoreCount > 0; scoreCount--) {
+            data = data + "Bryan:" + (scoreCount * 1000) + "\n";
+        }
+        //write default data in the file
+        try {
+            file.createNewFile();
+            writer = new FileWriter(file);
+            writer.write(data);
+            writer.close();
+        } catch (IOException e) {
+            logger.debug("Unable to write default data to score file");
+        }
     }
 }
