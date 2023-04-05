@@ -253,5 +253,8 @@ public class ScoresScene extends BaseScene {
         localScores.sort(comparator); //sort the new list to put new pair in place
         
         writeScores(); //write new high scores to the file
+        
+        scoreList.update(); //update the scores list
+        scoreList.reveal(); //animate
     }
 }
