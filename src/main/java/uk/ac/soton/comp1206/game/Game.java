@@ -338,8 +338,8 @@ public class Game {
             return;
         }
         lives.set(lives.get() - 1);
-        nextPiece();
         multiplier.set(1);
+        Platform.runLater(() -> nextPiece());
         //resetting timer
         timer.cancel();
         timer = new Timer();
