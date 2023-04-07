@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -34,7 +33,7 @@ import uk.ac.soton.comp1206.ui.GameWindow;
  */
 public class ChallengeScene extends BaseScene {
 
-    private static final Logger logger = LogManager.getLogger(MenuScene.class);
+    private static final Logger logger = LogManager.getLogger(ChallengeScene.class);
     /**
      * Game model of the game to link to UI
      */
@@ -315,6 +314,7 @@ public class ChallengeScene extends BaseScene {
      * @param time the duration of the current timer delay
      */
     private void handleGameLoop(int time) {
+        logger.info("Timer Bar Animation");
         var animation = new Transition() {
             {
                 setCycleDuration(Duration.millis(time));
