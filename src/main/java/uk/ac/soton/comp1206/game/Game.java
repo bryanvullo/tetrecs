@@ -114,7 +114,7 @@ public class Game {
             }
         };
         timer.schedule(timerTask, getTimerDelay());
-        gameLoopListener.gameLoop(getTimerDelay());
+        Platform.runLater(() -> gameLoopListener.gameLoop(getTimerDelay()));
     }
     
     /**
@@ -351,7 +351,7 @@ public class Game {
         };
         var delay = getTimerDelay();
         timer.schedule(timerTask, delay);
-        gameLoopListener.gameLoop(delay);
+        Platform.runLater(() -> gameLoopListener.gameLoop(delay));
     }
     
     /**
