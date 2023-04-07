@@ -349,8 +349,9 @@ public class Game {
                 gameLoop();
             }
         };
-        timer.schedule(timerTask, getTimerDelay());
-        gameLoopListener.gameLoop(getTimerDelay());
+        var delay = getTimerDelay();
+        timer.schedule(timerTask, delay);
+        gameLoopListener.gameLoop(delay);
     }
     
     /**
