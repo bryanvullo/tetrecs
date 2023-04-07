@@ -1,11 +1,8 @@
 package uk.ac.soton.comp1206.component;
 
-import java.util.ArrayList;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,7 +37,7 @@ public class ScoreList extends VBox {
      */
     private void build() {
         titleText = new Text(title);
-        titleText.getStyleClass().add("scorelist");
+        titleText.getStyleClass().add("score-list");
         pairs = new SimpleListProperty<>();
         setAlignment(Pos.CENTER);
     }
@@ -67,18 +64,63 @@ public class ScoreList extends VBox {
         getChildren().clear();
         getChildren().add(titleText);
         
+        int counter = 0; //used for styling
         for (var pair : pairs) {
             var box = new HBox();
             box.setAlignment(Pos.CENTER);
             getChildren().add(box);
             
             var userText = new Text(pair.getKey() + " : ");
-            userText.getStyleClass().add("scoreitem");
-            
             var scoreText = new Text(pair.getValue().toString());
-            scoreText.getStyleClass().add("scoreitem");
-            
             box.getChildren().addAll(userText, scoreText);
+    
+            //styling
+            userText.getStyleClass().add("score-item");
+            scoreText.getStyleClass().add("score-item");
+            var extraEffect = "-fx-effect: dropshadow(gaussian, black, 1, 1.0, 1, 1); -fx-font-weight: 600;";
+            switch (counter) {
+                case 0 -> {
+                    userText.setStyle("-fx-fill: gold; " + extraEffect);
+                    scoreText.setStyle("-fx-fill: gold; " + extraEffect);
+                }
+                case 1 -> {
+                    userText.setStyle("-fx-fill: silver; " + extraEffect);
+                    scoreText.setStyle("-fx-fill: silver; " + extraEffect);
+                }
+                case 2 -> {
+                    userText.setStyle("-fx-fill: #CD7F32; " + extraEffect);
+                    scoreText.setStyle("-fx-fill: #CD7F32; " + extraEffect);
+                }
+                case 3 -> {
+                    userText.setStyle("-fx-fill: deeppink");
+                    scoreText.setStyle("-fx-fill: deeppink");
+                }
+                case 4 -> {
+                    userText.setStyle("-fx-fill: red");
+                    scoreText.setStyle("-fx-fill: red");
+                }
+                case 5 -> {
+                    userText.setStyle("-fx-fill: orange");
+                    scoreText.setStyle("-fx-fill: orange");
+                }
+                case 6 -> {
+                    userText.setStyle("-fx-fill: yellow");
+                    scoreText.setStyle("-fx-fill: yellow");
+                }
+                case 7 -> {
+                    userText.setStyle("-fx-fill: lime");
+                    scoreText.setStyle("-fx-fill: lime");
+                }
+                case 8 -> {
+                    userText.setStyle("-fx-fill: darkturquoise");
+                    scoreText.setStyle("-fx-fill: darkturquoise");
+                }
+                case 9 -> {
+                    userText.setStyle("-fx-fill: deepskyblue");
+                    scoreText.setStyle("-fx-fill: deepskyblue");
+                }
+            }
+            counter++;
         }
     }
 }
