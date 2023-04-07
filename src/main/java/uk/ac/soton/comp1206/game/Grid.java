@@ -126,18 +126,13 @@ public class Grid {
     public Boolean canPlayPiece(GamePiece piece, int x, int y) {
         logger.info("checking if {} can be played piece in coordinates ({},{})", piece, x, y);
         var blocks = piece.getBlocks();
-        for (int pieceY = 0; pieceY < 3; pieceY++) {
-            for (int pieceX = 0; pieceX < 3; pieceX++) {
+        for (int pieceY = 0; pieceY < blocks.length; pieceY++) {
+            for (int pieceX = 0; pieceX < blocks[pieceY].length; pieceX++) {
                 if (blocks[pieceX][pieceY] > 0) {
                     int gridX = x + pieceX - 1; //calculating the grid coordinates
                     int gridY = y + pieceY - 1;
-                    try {
-                        if (grid[gridX][gridY].get() > 0) {
-                            logger.info("unable to place piece - occupied space");
-                            return false;
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        logger.info("unable to place piece - out of grid");
+                    if (get(gridX, gridY) != 0) {
+                        logger.info("unable to place piece");
                         return false;
                     }
                 }
@@ -157,12 +152,12 @@ public class Grid {
     public void playPiece(GamePiece piece, int x, int y) {
         logger.info("playing the piece {} in coordinates ({},{})", piece, x, y);
         var blocks = piece.getBlocks();
-        for (int pieceY = 0; pieceY < 3; pieceY++) {
-            for (int pieceX = 0; pieceX < 3; pieceX++) {
+        for (int pieceY = 0; pieceY < blocks.length; pieceY++) {
+            for (int pieceX = 0; pieceX < blocks[pieceY].length; pieceX++) {
                 if (blocks[pieceX][pieceY] > 0) {
                     int gridX = x + pieceX - 1; //calculating the grid coordinates
                     int gridY = y + pieceY - 1;
-                    grid[gridX][gridY].set(blocks[pieceX][pieceY]);
+                    set(gridX, gridY, blocks[pieceX][pieceY]);
                 }
             }
         }
