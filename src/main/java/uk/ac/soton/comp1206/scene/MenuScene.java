@@ -78,7 +78,7 @@ public class MenuScene extends BaseScene {
         multiPlayer.getStyleClass().add("menuItem");
         menuOptions.getChildren().add(multiPlayer);
         //Bind the text 'Multi Player' clicked action to startGame method in the menu TODO change this
-//        multiPlayer.setOnMouseClicked(this::startGame);
+        multiPlayer.setOnMouseClicked(this::openMultiplayer);
         
         //instructions screen
         var instructions = new Text("How To Play");
@@ -122,6 +122,16 @@ public class MenuScene extends BaseScene {
     private void openInstructions(MouseEvent event) {
         logger.info("Opening the Instructions Page");
         gameWindow.startInstructions();
+    }
+    
+    /**
+     * Handle when the Multiplayer text is clicked
+     * Opens the Lobby screen
+     * @param event The mouse event
+     */
+    private void openMultiplayer(MouseEvent event) {
+        logger.info("Opening the Multiplayer Lobby Screen");
+        gameWindow.startLobby();
     }
     
     /**

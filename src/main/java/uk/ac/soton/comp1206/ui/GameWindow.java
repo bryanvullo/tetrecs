@@ -94,6 +94,13 @@ public class GameWindow {
     public void startInstructions() {
         loadScene(new InstructionScene(this));
     }
+    
+    /**
+     * Display the lobby screen
+     */
+    public void startLobby() {
+        loadScene(new LobbyScene(this));
+    }
 
     /**
      * Display the single player challenge
