@@ -49,7 +49,7 @@ public class ScoresScene extends BaseScene {
     private Comparator comparator = Collections.reverseOrder(pairComparator);
     private ScoreList scoreList;
     private ScoreList remoteList;
-    private Communicator communicator = gameWindow.getCommunicator(); //TODO ask if this is okay
+    private Communicator communicator;
     private final Object KEY = new Object();
     private String name;
     
@@ -62,6 +62,7 @@ public class ScoresScene extends BaseScene {
         super(window);
         logger.info("Creating Scores Scene");
         this.game = game;
+        communicator = gameWindow.getCommunicator();
         
         //local scores
         var pairs = new ArrayList<Pair<String, Integer>>();
