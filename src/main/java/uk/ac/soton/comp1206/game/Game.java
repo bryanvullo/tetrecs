@@ -13,7 +13,9 @@ import uk.ac.soton.comp1206.component.GameBlock;
 import uk.ac.soton.comp1206.component.GameBlockCoordinate;
 import uk.ac.soton.comp1206.event.GameEndListener;
 import uk.ac.soton.comp1206.event.GameLoopListener;
+import uk.ac.soton.comp1206.event.LevelUpListener;
 import uk.ac.soton.comp1206.event.LineClearedListener;
+import uk.ac.soton.comp1206.event.LoseLifeListener;
 import uk.ac.soton.comp1206.event.NextPieceListener;
 
 /**
@@ -73,6 +75,8 @@ public class Game {
     private LineClearedListener lineClearedListener;
     private GameLoopListener gameLoopListener;
     private GameEndListener gameEndListener;
+    private LevelUpListener levelUpListener;
+    private LoseLifeListener loseLifeListener;
     
     /**
      * Create a new game with the specified rows and columns. Creates a corresponding grid model.
@@ -220,20 +224,23 @@ public class Game {
             logger.info("clearing {} lines", linesToClear);
             score(linesToClear, blocksToClear.size()); //increase score
             multiplier.set(multiplier.get() + 1); //increase multiplier
+            //telling listener of blocks to clear
+            lineClearedListener.lineCleared(blocksToClear.toArray(new GameBlockCoordinate[0]));
         } else {
             multiplier.set(1);
         }
     
         //updating level
+        var oldLevel = level.get();
         level.set(score.get() / 1000);
+        if (oldLevel < level.get()) {
+            Platform.runLater(() -> levelUpListener.levelUp());
+        }
         
         //clear all blocks in the clear list
         for (var block : blocksToClear) {
             grid.set(block.getX(), block.getY(), 0);
         }
-    
-        //telling listener of blocks to clear
-        lineClearedListener.lineCleared(blocksToClear.toArray(new GameBlockCoordinate[0]));
         
         //resetting timer
         timer.cancel();
@@ -289,6 +296,22 @@ public class Game {
     }
     
     /**
+     * Set the Level Up Listener for when the game increases in level
+     * @param listener the listener to set
+     */
+    public void setLevelUpListener(LevelUpListener listener) {
+        levelUpListener = listener;
+    }
+    
+    /**
+     * Set the Lose-Life Listener for when the player loses a life
+     * @param listener the listener to set
+     */
+    public void setLoseLifeListener(LoseLifeListener listener) {
+        loseLifeListener = listener;
+    }
+    
+    /**
      * Method to rotate the current piece
      */
     public void rotateCurrentPiece() {
@@ -338,8 +361,10 @@ public class Game {
             return;
         }
         lives.set(lives.get() - 1);
+        Platform.runLater(() -> loseLifeListener.loseLife());
         multiplier.set(1);
         Platform.runLater(() -> nextPiece());
+        
         //resetting timer
         timer.cancel();
         timer = new Timer();
