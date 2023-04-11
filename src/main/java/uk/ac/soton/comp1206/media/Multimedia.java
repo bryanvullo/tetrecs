@@ -73,6 +73,30 @@ public class Multimedia {
     }
     
     /**
+     * Plays a music file only once instead on indefinitely
+     * @param musicFile the file to play
+     */
+    public static void playMusicOnce(String musicFile) {
+        //checks if audio is enabled
+        if (!audioEnabled) return;
+    
+        //stops previous music
+        if (musicPlayer != null) musicPlayer.stop();
+    
+        //gets the external form of the music file
+        String toPlay = getMediaFile(musicFile);
+    
+        try {
+            Media play = new Media(toPlay);
+            musicPlayer = new MediaPlayer(play);
+            musicPlayer.play();
+        } catch (Exception e) {
+            audioEnabled = false;
+            logger.error("unable to play audio, disabling audio");
+        }
+    }
+    
+    /**
      * This method gets the external form (path) of the media file.
      * @param file The media file to fetch its path
      * @return The media file's path
