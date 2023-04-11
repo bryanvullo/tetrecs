@@ -122,6 +122,7 @@ public class LobbyChat extends VBox {
      * @param host whether the play is the host
      */
     public void setHost(Boolean host) {
+        logger.info("Setting host to {}", host);
         this.disabledHost.set(!host);
     }
     
@@ -134,8 +135,10 @@ public class LobbyChat extends VBox {
     private void sendMessage(String message) {
         if (message.startsWith("/nick")) {
             var name = message.replaceFirst("/nick ", "");
+            logger.info("Changing nickname to {}", name);
             communicator.send("NICK " + name);
         } else {
+            logger.info("Sending message {}", message);
             communicator.send("MSG " + message);
         }
     
@@ -145,6 +148,7 @@ public class LobbyChat extends VBox {
      * Request the list of users in the Lobby
      */
     private void requestUsers() {
+        logger.info("Requesting list of users in lobby");
         communicator.send("USERS");
     }
     
@@ -153,6 +157,7 @@ public class LobbyChat extends VBox {
      * @param communication the content of the message
      */
     public void receiveMessage(String communication) {
+        logger.info("Received a message, displaying it to the chat UI");
         Multimedia.playAudio("sounds/message.wav");
         
         var pair = communication.split(":", 2);
@@ -183,6 +188,7 @@ public class LobbyChat extends VBox {
      * @param event event from button
      */
     private void leave(ActionEvent event) {
+        logger.info("Leaving the lobby");
         communicator.send("PART");
         disabledHost.set(true);
     }
@@ -192,6 +198,7 @@ public class LobbyChat extends VBox {
      * @param event event from button
      */
     private void startGame(ActionEvent event) {
+        logger.info("Starting the game from everyone in the lobby");
         communicator.send("START");
     }
     
@@ -200,6 +207,7 @@ public class LobbyChat extends VBox {
      * @param nickname the new nickname
      */
     public void setNickname(String nickname) {
+        logger.info("Changing local player's nickname to {}", nickname);
         this.nickname = new SimpleStringProperty(nickname);
     }
     
@@ -209,6 +217,7 @@ public class LobbyChat extends VBox {
      * @param message the content of the NICK communication
      */
     public void handleChangeName(String message) {
+        logger.info("Handling NICK messages from communicator");
         if (!message.contains(":")) {
             setNickname(message);
         }
@@ -220,6 +229,7 @@ public class LobbyChat extends VBox {
      * @param message the string of users separated by \n characters
      */
     public void handleUsers(String message) {
+        logger.info("Adding the list of users in the lobby to the UI");
         var usersNames = message.split("\n");
         usersFlow.getChildren().clear();
         for (String user : usersNames) {
