@@ -4,6 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -220,12 +222,25 @@ public class LobbyScene extends BaseScene {
             switch (type) {
                 case "CHANNELS" -> Platform.runLater(() -> addGames(content));
                 case "JOIN" -> Platform.runLater(() -> joinedGame(content));
-                case "ERROR" -> logger.error(content);
+                case "ERROR" -> Platform.runLater(() -> popUpError(content));
                 case "MSG" -> Platform.runLater(() -> lobbyChat.receiveMessage(content));
                 case "NICK" -> Platform.runLater(() -> lobbyChat.handleChangeName(content));
                 case "USERS" -> Platform.runLater(() -> lobbyChat.handleUsers(content));
             }
         }
+    }
+    
+    /**
+     * method to display a pop-up window of an error
+     * @param message The error message to display
+     */
+    private void popUpError(String message) {
+        logger.error("Error from communicator: {}", message);
+        var popUp = new Alert(AlertType.ERROR);
+        popUp.setTitle("Error");
+        popUp.setContentText(message);
+        
+        popUp.showAndWait();
     }
     
     /**
