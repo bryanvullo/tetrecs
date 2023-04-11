@@ -245,6 +245,7 @@ TextField {
 
 .myname {
     -fx-font-weight: 700;
+    -fx-fill: yellow;
 }
 
 .instructions {
