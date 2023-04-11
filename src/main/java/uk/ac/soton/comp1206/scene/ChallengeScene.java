@@ -156,6 +156,12 @@ public class ChallengeScene extends BaseScene {
         
         //Handle the end of the game
         game.setGameEndListener(this::handleEndGame);
+        
+        //Handle losing a life
+        game.setLoseLifeListener(this::handleLoseLife);
+        
+        //Handle levelling up
+        game.setLevelUpListener(this::handleLevelUp);
     }
 
     /**
@@ -284,6 +290,7 @@ public class ChallengeScene extends BaseScene {
      * Method to start the Scores screen once the game ends
      */
     private void handleEndGame() {
+        Multimedia.playMusicOnce("music/end.wav");
         gameWindow.startScores(game);
     }
     
@@ -306,6 +313,7 @@ public class ChallengeScene extends BaseScene {
      */
     private void handleLineCleared(GameBlockCoordinate[] coordinates) {
         logger.info("DEBUG handling line cleared");
+        Multimedia.playAudio("sounds/clear.wav");
         board.fadeOut(coordinates);
     }
     
@@ -329,6 +337,20 @@ public class ChallengeScene extends BaseScene {
             }
         };
         animation.play();
+    }
+    
+    /**
+     * Method to execute when the player loses a life
+     */
+    private void handleLoseLife() {
+        Multimedia.playAudio("sounds/lifelose.wav");
+    }
+    
+    /**
+     * Method to execute when the game levels up
+     */
+    private void handleLevelUp() {
+        Multimedia.playAudio("sounds/level.wav");
     }
     
     /**
