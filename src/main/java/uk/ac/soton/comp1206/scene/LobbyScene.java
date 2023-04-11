@@ -53,6 +53,7 @@ public class LobbyScene extends BaseScene {
      */
     @Override
     public void initialise() {
+        logger.info("Initialising listeners");
         scene.setOnKeyPressed(keyEvent -> { //keyboard input to escape scene
             if (keyEvent.getCode() == KeyCode.ESCAPE) {
                 logger.info("Escaping from Lobby Scene");
@@ -137,6 +138,7 @@ public class LobbyScene extends BaseScene {
      * @param event the mouse event
      */
     private void displayField(MouseEvent event) {
+        logger.info("Displaying the field to insert new game name");
         if (!canCreateGame) return;
         canCreateGame = false;
         var field = new TextField();
