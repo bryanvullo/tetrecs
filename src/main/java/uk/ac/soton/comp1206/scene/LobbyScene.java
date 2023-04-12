@@ -217,7 +217,7 @@ public class LobbyScene extends BaseScene {
             switch (type) {
                 case "PARTED" -> Platform.runLater(this::partedGame);
                 case "HOST" -> Platform.runLater(() -> lobbyChat.setHost(true));
-//                case "START" -> //start game
+                case "START" -> Platform.runLater(() -> gameWindow.startBattle());
             }
         } else {
             var content = lines[1];
