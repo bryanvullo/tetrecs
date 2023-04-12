@@ -85,6 +85,7 @@ public class ChallengeScene extends BaseScene {
         
         board = new GameBoard(game.getGrid(),gameWindow.getWidth()/2,gameWindow.getWidth()/2);
         centreBox = new VBox(board);
+        centreBox.setAlignment(Pos.CENTER);
         mainPane.setCenter(centreBox);
         
         //adding UI components: score, lives, level and multiplier
