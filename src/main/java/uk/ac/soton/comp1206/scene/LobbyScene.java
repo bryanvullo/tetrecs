@@ -217,7 +217,10 @@ public class LobbyScene extends BaseScene {
             switch (type) {
                 case "PARTED" -> Platform.runLater(this::partedGame);
                 case "HOST" -> Platform.runLater(() -> lobbyChat.setHost(true));
-                case "START" -> Platform.runLater(() -> gameWindow.startBattle());
+                case "START" -> Platform.runLater(() -> {
+                    channelsTimer.cancel();
+                    gameWindow.startBattle();
+                });
             }
         } else {
             var content = lines[1];
@@ -242,7 +245,7 @@ public class LobbyScene extends BaseScene {
         popUp.setTitle("Error");
         popUp.setContentText(message);
         
-        popUp.showAndWait();
+        popUp.show();
     }
     
     /**
