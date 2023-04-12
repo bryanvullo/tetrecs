@@ -108,6 +108,13 @@ public class GameWindow {
     public void startChallenge() { loadScene(new ChallengeScene(this)); }
     
     /**
+     * Display the multiplayer battle game
+     */
+    public void startBattle() {
+        loadScene(new MultiplayerScene(this));
+    }
+    
+    /**
      * Display the scores screen
      */
     public void startScores(Game game) {
