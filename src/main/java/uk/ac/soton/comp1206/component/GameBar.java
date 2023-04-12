@@ -1,5 +1,6 @@
 package uk.ac.soton.comp1206.component;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -17,7 +18,7 @@ import uk.ac.soton.comp1206.scene.MenuScene;
 public class GameBar extends VBox {
     private static final Logger logger = LogManager.getLogger(GameBar.class);
     
-    String title;
+    StringProperty title;
     private Text score;
     private Text multiplier;
     private Text level;
@@ -29,7 +30,7 @@ public class GameBar extends VBox {
      */
     public GameBar(String title) {
         logger.info("Building the Game Bar");
-        this.title = title; //title is changed: single/multi-player
+        this.title = new SimpleStringProperty(title); //title is changed: single/multi-player
         build();
     }
     
@@ -38,7 +39,8 @@ public class GameBar extends VBox {
         alignmentProperty().set(Pos.CENTER);
         
         //title of GameBar
-        var titleText = new Text(title);
+        var titleText = new Text();
+        titleText.textProperty().bind(title);
         titleText.getStyleClass().add("title");
         getChildren().add(titleText);
     
@@ -90,6 +92,14 @@ public class GameBar extends VBox {
         gameDataBar.setSpacing(100);
         
         getChildren().add(gameDataBar);
+    }
+    
+    /**
+     * Method to change the title of the game bar
+     * @param newTitle the new title to display
+     */
+    public void setTitle(String newTitle) {
+        title.set(newTitle);
     }
     
     /**
