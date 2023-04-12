@@ -56,7 +56,7 @@ public class GameWindow {
         setupDefaultScene();
 
         //Setup communicator
-        communicator = new Communicator("ws://ofb-labs.soton.ac.uk:9700");
+        communicator = Communicator.getCommunicator();
         
         //Intro: Fade ECS Logo -> then opens menu
         startIntro();
