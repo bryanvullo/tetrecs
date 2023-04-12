@@ -17,6 +17,8 @@ import java.util.List;
 public class Communicator {
 
     private static final Logger logger = LogManager.getLogger(Communicator.class);
+    
+    private static Communicator instance;
 
     /**
      * Attached communication listeners listening to messages on this Communicator. Each will be sent any messages.
@@ -30,7 +32,7 @@ public class Communicator {
      *
      * @param server server to connect to
      */
-    public Communicator(String server) {
+    private Communicator(String server) {
 
         try {
             var socketFactory = new WebSocketFactory();
@@ -119,5 +121,15 @@ public class Communicator {
             handler.receiveCommunication(message);
         }
     }
-
+    
+    /**
+     * Method to get the one instance of the communicator
+     * @return the communicator
+     */
+    public static Communicator getCommunicator() {
+        if (instance == null) {
+            instance = new Communicator("ws://ofb-labs.soton.ac.uk:9700");
+        }
+        return instance;
+    }
 }
