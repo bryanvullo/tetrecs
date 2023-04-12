@@ -20,7 +20,7 @@ public class ScoreList extends VBox {
     private static final Logger logger = LogManager.getLogger(ScoreList.class);
     private String title;
     public ListProperty<Pair<String, Integer>> pairs;
-    private Text titleText;
+    protected Text titleText;
     
     /**
      * Creates a score list with a title above all the scores
