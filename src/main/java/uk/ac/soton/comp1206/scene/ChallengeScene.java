@@ -47,6 +47,9 @@ public class ChallengeScene extends BaseScene {
     private FileWriter writer;
     private Text highScore;
     private Integer localHighScore;
+    protected GameBar topBar;
+    protected VBox highScoreBox;
+    protected VBox centreBox;
     
     /**
      * Create a new Single Player challenge scene
@@ -79,12 +82,13 @@ public class ChallengeScene extends BaseScene {
 
         var mainPane = new BorderPane();
         challengePane.getChildren().add(mainPane);
-    
+        
         board = new GameBoard(game.getGrid(),gameWindow.getWidth()/2,gameWindow.getWidth()/2);
-        mainPane.setCenter(board);
+        centreBox = new VBox(board);
+        mainPane.setCenter(centreBox);
         
         //adding UI components: score, lives, level and multiplier
-        var topBar = new GameBar("Challenge Mode");
+        topBar = new GameBar("Challenge Mode");
         //binding the UI properties to the model
         topBar.scoreProperty().bind(game.score.asString());
         topBar.livesProperty().bind(game.lives.asString());
@@ -99,7 +103,7 @@ public class ChallengeScene extends BaseScene {
         mainPane.setRight(sideBar);
         
             //High score box
-        var highScoreBox = new VBox();
+        highScoreBox = new VBox();
         highScoreBox.setAlignment(Pos.CENTER);
         sideBar.getChildren().add(highScoreBox);
         var highScoreText = new Text("High Score");
@@ -208,7 +212,7 @@ public class ChallengeScene extends BaseScene {
      * Handles the event which the user pressed a key
      * @param event KeyEvent of key pressed
      */
-    private void keyboardInput(KeyEvent event) {
+    protected void keyboardInput(KeyEvent event) {
         logger.info("A key has been Pressed");
         switch (event.getCode()) {
             case ESCAPE -> handleEscape();
@@ -234,7 +238,7 @@ public class ChallengeScene extends BaseScene {
      * Handles the case which the escape key has been pressed
      * Returns to the Game Menu
      */
-    private void handleEscape() {
+    protected void handleEscape() {
         logger.info("Escape Key have been pressed, Returning to the Menu");
         closeGame();
         gameWindow.startMenu();
@@ -282,7 +286,6 @@ public class ChallengeScene extends BaseScene {
      * Method to end the game and clean up
      */
     private void closeGame() {
-        //communicator.clearListeners() for multiplayer?
         game.endGame();
     }
     
