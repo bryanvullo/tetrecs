@@ -30,6 +30,7 @@ import uk.ac.soton.comp1206.network.Communicator;
 public class LobbyChat extends VBox {
     
     private static final Logger logger = LogManager.getLogger(LobbyChat.class);
+    private Timer usersTimer;
     private Communicator communicator;
     private StringProperty nickname;
     private List<String> users;
@@ -46,8 +47,8 @@ public class LobbyChat extends VBox {
         logger.info("Creating a LobbyChat");
         setPrefHeight(height);
         this.communicator = communicator;
-        
-        var usersTimer = new Timer("UsersTimerThread");
+    
+        usersTimer = new Timer("UsersTimerThread");
         var task = new TimerTask() {
             /**
              * The action to be performed by this timer task.
@@ -239,5 +240,10 @@ public class LobbyChat extends VBox {
             }
             usersFlow.getChildren().add(userText);
         }
+    }
+    
+    public void stopUsersTimer() {
+        usersTimer.cancel();
+        usersTimer = null;
     }
 }
