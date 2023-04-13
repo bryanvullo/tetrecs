@@ -199,7 +199,7 @@ public class LobbyScene extends BaseScene {
     }
     
     /**
-     * Method to request all the availible games from the communicator
+     * Method to request all the available games from the communicator
      */
     private void requestChannels() {
         logger.info("Requesting all the channels available");
