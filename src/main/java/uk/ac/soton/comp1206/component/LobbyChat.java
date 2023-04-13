@@ -242,6 +242,9 @@ public class LobbyChat extends VBox {
         }
     }
     
+    /**
+     * Method to stop the users timer
+     */
     public void stopUsersTimer() {
         usersTimer.cancel();
         usersTimer = null;
