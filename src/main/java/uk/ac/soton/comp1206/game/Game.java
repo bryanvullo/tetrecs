@@ -63,7 +63,7 @@ public class Game {
      */
     private final Random random = new Random();
     
-    private Timer timer;
+    private Timer gameLoopTimer;
     
     /**
      * field variable which stores the current piece model
@@ -107,7 +107,7 @@ public class Game {
         followingPiece = spawnPiece();
         nextPiece();
         //setting timer
-        timer = new Timer();
+        gameLoopTimer = new Timer();
         var timerTask = new TimerTask() {
             /**
              * The action to be performed by this timer task.
@@ -117,7 +117,7 @@ public class Game {
                 gameLoop();
             }
         };
-        timer.schedule(timerTask, getTimerDelay());
+        gameLoopTimer.schedule(timerTask, getTimerDelay());
         Platform.runLater(() -> gameLoopListener.gameLoop(getTimerDelay()));
     }
     
@@ -243,15 +243,15 @@ public class Game {
         }
         
         //resetting timer
-        timer.cancel();
-        timer = new Timer();
+        gameLoopTimer.cancel();
+        gameLoopTimer = new Timer();
         var timerTask = new TimerTask() {
             @Override
             public void run() {
                 gameLoop();
             }
         };
-        timer.schedule(timerTask, getTimerDelay());
+        gameLoopTimer.schedule(timerTask, getTimerDelay());
         gameLoopListener.gameLoop(getTimerDelay());
     }
     
@@ -353,7 +353,7 @@ public class Game {
      * This method handles when the timer reaches zero
      * lose a life and current piece, timer and multiplier is reset.
      */
-    private void gameLoop() {
+    protected void gameLoop() {
         logger.info("Timer over");
         if (lives.get() <= 0) {
             endGame(); //if no more lives, end game
@@ -366,8 +366,8 @@ public class Game {
         Platform.runLater(() -> nextPiece());
         
         //resetting timer
-        timer.cancel();
-        timer = new Timer();
+        gameLoopTimer.cancel();
+        gameLoopTimer = new Timer();
         var timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -375,7 +375,7 @@ public class Game {
             }
         };
         var delay = getTimerDelay();
-        timer.schedule(timerTask, delay);
+        gameLoopTimer.schedule(timerTask, delay);
         Platform.runLater(() -> gameLoopListener.gameLoop(delay));
     }
     
@@ -384,8 +384,8 @@ public class Game {
      */
     public void endGame() {
         logger.info("Ending the game");
-        timer.cancel();
-        timer = null;
+        gameLoopTimer.cancel();
+        gameLoopTimer = null;
         nextPieceListener = null;
         lineClearedListener = null;
         gameLoopListener = null;
