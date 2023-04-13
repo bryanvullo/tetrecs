@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uk.ac.soton.comp1206.Triplet;
+import uk.ac.soton.comp1206.dataStructure.Triplet;
 
 /**
  * This custom component is used to display the online scores of all the players in a lobby

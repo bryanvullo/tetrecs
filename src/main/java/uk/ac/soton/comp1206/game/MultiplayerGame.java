@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import uk.ac.soton.comp1206.Triplet;
+import uk.ac.soton.comp1206.dataStructure.Triplet;
 import uk.ac.soton.comp1206.event.ChangedScoresListener;
 import uk.ac.soton.comp1206.event.MessageListener;
 import uk.ac.soton.comp1206.network.Communicator;

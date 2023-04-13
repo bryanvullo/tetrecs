@@ -1,4 +1,4 @@
-package uk.ac.soton.comp1206;
+package uk.ac.soton.comp1206.dataStructure;
 
 public class Triplet<F, S, T> {
     
