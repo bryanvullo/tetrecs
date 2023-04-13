@@ -50,6 +50,7 @@ public class ChallengeScene extends BaseScene {
     protected GameBar topBar;
     protected VBox highScoreBox;
     protected VBox centreBox;
+    protected VBox sideBar;
     
     /**
      * Create a new Single Player challenge scene
@@ -99,7 +100,7 @@ public class ChallengeScene extends BaseScene {
         mainPane.setTop(topBar);
     
         //adding sidebar UI components
-        var sideBar = new VBox();
+        sideBar = new VBox();
         sideBar.alignmentProperty().set(Pos.CENTER);
         mainPane.setRight(sideBar);
         
