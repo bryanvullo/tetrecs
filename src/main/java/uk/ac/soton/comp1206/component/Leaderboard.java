@@ -56,11 +56,14 @@ public class Leaderboard extends ScoreList {
                     playerText.getStyleClass().add("deadscore");
                     playerText.setStyle("-fx-fill: red;");
                 }
-                case "1" -> {
+                case "0" -> {
                     playerText.setStyle("-fx-fill: red;");
                 }
-                case "2" -> {
+                case "1" -> {
                     playerText.setStyle("-fx-fill: yellow;");
+                }
+                case "2" -> {
+                    playerText.setStyle("-fx-fill: orange;");
                 }
                 case "3" -> {
                     playerText.setStyle("-fx-fill: lime;");
