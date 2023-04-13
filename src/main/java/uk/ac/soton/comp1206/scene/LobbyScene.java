@@ -173,6 +173,7 @@ public class LobbyScene extends BaseScene {
      */
     private void partedGame() {
         logger.info("Left {}", currentGame);
+        lobbyChat.stopUsersTimer();
         rightBar.getChildren().clear();
         canCreateGame = true;
     }
@@ -219,6 +220,7 @@ public class LobbyScene extends BaseScene {
                 case "HOST" -> Platform.runLater(() -> lobbyChat.setHost(true));
                 case "START" -> Platform.runLater(() -> {
                     channelsTimer.cancel();
+                    lobbyChat.stopUsersTimer();
                     gameWindow.startBattle();
                 });
             }
