@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.App;
 import uk.ac.soton.comp1206.game.Game;
+import uk.ac.soton.comp1206.game.MultiplayerGame;
 import uk.ac.soton.comp1206.network.Communicator;
 import uk.ac.soton.comp1206.scene.*;
 
@@ -116,13 +117,22 @@ public class GameWindow {
     
     /**
      * Display the scores screen
+     * @param game The game object to pass into the scene
      */
     public void startScores(Game game) {
         loadScene(new ScoresScene(this, game));
     }
+    
+    /**
+     * Display the multiplayer scores screen
+     * @param game The multiplayer game object to pass into the scene
+     */
+    public void startMultiplayerScores(MultiplayerGame game) {
+        loadScene(new MultiplayerScoresScene(this, game));
+    }
 
     /**
-     * Setup the default settings for the stage itself (the window), such as the title and minimum width and height.
+     * Set up the default settings for the stage itself (the window), such as the title and minimum width and height.
      */
     public void setupStage() {
         stage.setTitle("TetrECS");
