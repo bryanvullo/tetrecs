@@ -60,10 +60,10 @@ public class Leaderboard extends ScoreList {
                     playerText.setStyle("-fx-fill: red;");
                 }
                 case "1" -> {
-                    playerText.setStyle("-fx-fill: yellow;");
+                    playerText.setStyle("-fx-fill: orange;");
                 }
                 case "2" -> {
-                    playerText.setStyle("-fx-fill: orange;");
+                    playerText.setStyle("-fx-fill: yellow;");
                 }
                 case "3" -> {
                     playerText.setStyle("-fx-fill: lime;");
