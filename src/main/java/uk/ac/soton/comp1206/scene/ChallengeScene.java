@@ -294,7 +294,7 @@ public class ChallengeScene extends BaseScene {
     /**
      * Method to start the Scores screen once the game ends
      */
-    private void handleEndGame() {
+    protected void handleEndGame() {
         Multimedia.playMusicOnce("music/end.wav");
         gameWindow.startScores(game);
     }
