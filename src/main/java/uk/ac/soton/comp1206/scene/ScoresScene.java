@@ -47,11 +47,12 @@ public class ScoresScene extends BaseScene {
     private BorderPane mainPane;
     private Comparator<Pair<String, Integer>> pairComparator = Comparator.comparingInt(Pair::getValue);
     private Comparator comparator = Collections.reverseOrder(pairComparator);
-    private ScoreList scoreList;
+    protected ScoreList scoreList;
     private ScoreList remoteList;
     private Communicator communicator;
     private final Object KEY = new Object();
     private String name;
+    protected HBox scoreBox;
     
     /**
      * Creates a Scene Object
@@ -166,8 +167,8 @@ public class ScoresScene extends BaseScene {
         var highScoreText = new Text("High Scores");
         highScoreText.getStyleClass().add("score-text");
         centerBox.getChildren().add(highScoreText);
-        
-        var scoreBox = new HBox();
+    
+        scoreBox = new HBox();
         scoreBox.setAlignment(Pos.CENTER);
         scoreBox.setSpacing(50);
         centerBox.getChildren().add(scoreBox);
@@ -296,7 +297,7 @@ public class ScoresScene extends BaseScene {
      * Handles the case which the escape key has been pressed
      * Returns to the Game Menu
      */
-    private void handleEscape() {
+    protected void handleEscape() {
         logger.info("Escape Key have been pressed, Returning to the Menu from Scores Scene");
         gameWindow.startMenu();
     }
