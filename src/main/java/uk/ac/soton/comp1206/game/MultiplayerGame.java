@@ -149,11 +149,17 @@ public class MultiplayerGame extends Game {
      */
     @Override
     public void endGame() {
-        logger.info("Cancelling scores timer");
-        scoresTimer.cancel();
-        scoresTimer = null;
+        logger.info("Sending DIE protocol");
         communicator.send("DIE");
         super.endGame();
+    }
+    
+    /**
+     * Method to stop the scores timer
+     */
+    public void stopScoresTimer() {
+        scoresTimer.cancel();
+        scoresTimer = null;
     }
     
     /**
