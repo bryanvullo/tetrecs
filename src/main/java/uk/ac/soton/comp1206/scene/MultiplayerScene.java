@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.component.Leaderboard;
 import uk.ac.soton.comp1206.game.MultiplayerGame;
+import uk.ac.soton.comp1206.media.Multimedia;
 import uk.ac.soton.comp1206.network.Communicator;
 import uk.ac.soton.comp1206.ui.GameWindow;
 
@@ -93,13 +94,23 @@ public class MultiplayerScene extends ChallengeScene {
     }
     
     /**
-     * overrides handleEscape to send a DIE message to communicator
+     * overrides handleEscape to stop the scores timer to communicator
      */
     @Override
     protected void handleEscape() {
         logger.info("Escaping from the Multiplayer Scene");
-        communicator.send("DIE");
+        game.stopScoresTimer();
+        game.endGame();
         super.handleEscape();
+    }
+    
+    /**
+     * Method to start the Scores screen once the game ends
+     */
+    @Override
+    protected void handleEndGame() {
+        Multimedia.playMusicOnce("music/end.wav");
+        gameWindow.startMultiplayerScores(game);
     }
     
     /**
