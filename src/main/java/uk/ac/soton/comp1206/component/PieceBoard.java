@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.soton.comp1206.game.GamePiece;
 import uk.ac.soton.comp1206.game.Grid;
 
+/**
+ * This is a board which is used to display a GamePiece
+ */
 public class PieceBoard extends GameBoard {
     private static final Logger logger = LogManager.getLogger(PieceBoard.class);
     

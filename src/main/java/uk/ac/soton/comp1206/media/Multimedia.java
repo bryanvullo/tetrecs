@@ -125,6 +125,10 @@ public class Multimedia {
         }
     }
     
+    /**
+     * Set another MusicFile to play at the end of the currently playing file
+     * @param otherMusicFile The MusicFile to be played
+     */
     public static void setOnMusicEnd(String otherMusicFile) {
         logger.info("setting {} to play next", otherMusicFile);
         musicPlayer.setOnEndOfMedia(() -> playMusic(otherMusicFile));

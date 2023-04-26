@@ -47,11 +47,17 @@ public class ScoresScene extends BaseScene {
     private BorderPane mainPane;
     private Comparator<Pair<String, Integer>> pairComparator = Comparator.comparingInt(Pair::getValue);
     private Comparator comparator = Collections.reverseOrder(pairComparator);
+    /**
+     * The UI list of scores which holds local scores
+     */
     protected ScoreList scoreList;
     private ScoreList remoteList;
     private Communicator communicator;
     private final Object KEY = new Object();
     private String name;
+    /**
+     * The HBox which holds the two ScoreLists for local and online scores
+     */
     protected HBox scoreBox;
     
     /**

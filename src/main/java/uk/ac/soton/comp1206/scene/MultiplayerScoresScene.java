@@ -7,6 +7,10 @@ import uk.ac.soton.comp1206.game.Game;
 import uk.ac.soton.comp1206.game.MultiplayerGame;
 import uk.ac.soton.comp1206.ui.GameWindow;
 
+/**
+ * The Scores Scene after a Multiplayer Game
+ * Displays the current games players scores instead of local scores
+ */
 public class MultiplayerScoresScene extends ScoresScene {
     
     private static final Logger logger = LogManager.getLogger(MultiplayerScoresScene.class);

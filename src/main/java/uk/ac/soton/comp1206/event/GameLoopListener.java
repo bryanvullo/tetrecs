@@ -8,6 +8,7 @@ public interface GameLoopListener {
     /**
      * The method to execute on the event
      * To be overridden on implementation
+     * @param time the length of the game loop countdown
      */
     public void gameLoop(int time);
     

@@ -47,9 +47,22 @@ public class ChallengeScene extends BaseScene {
     private FileWriter writer;
     private Text highScore;
     private Integer localHighScore;
+    /**
+     * The UI component which holds the Scores, Lives, Multiplier and Level UI components
+     */
     protected GameBar topBar;
+    /**
+     * The UI component which holds the local high score
+     */
     protected VBox highScoreBox;
+    /**
+     * The UI component which holds everything in the centre. I.E. GameBoard
+     */
     protected VBox centreBox;
+    /**
+     * The UI component which holds everything at the side of the GameBoard
+     * such as the PieceBoards and high score
+     */
     protected VBox sideBar;
     
     /**

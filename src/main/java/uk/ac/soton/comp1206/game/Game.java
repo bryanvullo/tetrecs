@@ -69,6 +69,9 @@ public class Game {
      * field variable which stores the current piece model
      */
     public GamePiece currentPiece;
+    /**
+     * field variable which stores the following piece model
+     */
     public GamePiece followingPiece;
     
     private NextPieceListener nextPieceListener;
@@ -124,6 +127,7 @@ public class Game {
     /**
      * Handle what should happen when a particular block is clicked
      * @param gameBlock the block that was clicked
+     * @return if the piece was played or not
      */
     public Boolean blockClicked(GameBlock gameBlock) {
         //Get the position of this block
@@ -290,6 +294,7 @@ public class Game {
     
     /**
      * Set the Game End Listener for when the game ends
+     * @param listener The Listener to set to gameEndListener
      */
     public void setGameEndListener(GameEndListener listener) {
         gameEndListener = listener;

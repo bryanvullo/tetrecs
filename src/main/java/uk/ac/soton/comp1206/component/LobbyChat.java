@@ -42,6 +42,8 @@ public class LobbyChat extends VBox {
     
     /**
      * Creates a LobbyChat Component
+     * @param communicator the communicator to send/receive messages
+     * @param height The preferred height for the lobby chat box
      */
     public LobbyChat(Communicator communicator, Integer height) {
         logger.info("Creating a LobbyChat");

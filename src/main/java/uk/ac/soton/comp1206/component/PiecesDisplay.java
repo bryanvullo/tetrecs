@@ -19,6 +19,8 @@ public class PiecesDisplay extends GridPane {
     
     /**
      * Creates a custom component which creates a UI display of every piece in the game
+     * @param window The GameWindow it will be placed in.
+     *               The Width is dependent on GameWindow's width
      */
     public PiecesDisplay(GameWindow window) {
         logger.info("Creating the Pieces Display");
