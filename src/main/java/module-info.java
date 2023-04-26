@@ -1,3 +1,6 @@
+/**
+ * The layout for the comp1206 module and its dependencies
+ */
 module uk.ac.soton.comp1206 {
     requires java.scripting;
     requires javafx.controls;
@@ -14,4 +17,5 @@ module uk.ac.soton.comp1206 {
     exports uk.ac.soton.comp1206.component;
     exports uk.ac.soton.comp1206.game;
     exports uk.ac.soton.comp1206.dataStructure;
+    exports uk.ac.soton.comp1206.media;
 }
