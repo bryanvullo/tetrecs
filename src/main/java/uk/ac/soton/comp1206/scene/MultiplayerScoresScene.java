@@ -36,7 +36,6 @@ public class MultiplayerScoresScene extends ScoresScene {
         
         leaderboard.playersScoresProperty().bind(game.playersDataProperty());
         leaderboard.update();
-        game.setScoresListener(() -> leaderboard.update());
         leaderboard.reveal();
     }
     
@@ -51,14 +50,5 @@ public class MultiplayerScoresScene extends ScoresScene {
     
         leaderboard = new Leaderboard("Versus");
         scoreBox.getChildren().add(0, leaderboard);
-    }
-    
-    /**
-     * Handles the case which the escape key has been pressed Returns to the Game Menu
-     */
-    @Override
-    protected void handleEscape() {
-        game.stopScoresTimer();
-        super.handleEscape();
     }
 }

@@ -151,6 +151,7 @@ public class MultiplayerGame extends Game {
     public void endGame() {
         logger.info("Sending DIE protocol");
         communicator.send("DIE");
+        stopScoresTimer();
         super.endGame();
     }
     

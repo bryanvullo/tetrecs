@@ -94,17 +94,6 @@ public class MultiplayerScene extends ChallengeScene {
     }
     
     /**
-     * overrides handleEscape to stop the scores timer to communicator
-     */
-    @Override
-    protected void handleEscape() {
-        logger.info("Escaping from the Multiplayer Scene");
-        game.stopScoresTimer();
-        game.endGame();
-        super.handleEscape();
-    }
-    
-    /**
      * Method to start the Scores screen once the game ends
      */
     @Override
